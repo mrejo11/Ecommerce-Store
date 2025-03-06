@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Search, UserRound, ShoppingCart, Menu } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+// import { motion } from "framer-motion"; // وارد کردن Framer Motion
+
 import { Button } from "@/components/ui/button";
 
 export default function NavbarItems() {
@@ -15,15 +17,38 @@ export default function NavbarItems() {
     }
   };
 
+   // تنظیمات انیمیشن
+  //  const menuVariants = {
+  //   open: {
+  //     y: 0,
+  //     opacity: 1,
+  //     transition: { duration: 0.3, ease: "easeInOut" },
+  //   },
+  //   closed: {
+  //     y: "-100%",
+  //     opacity: 0,
+  //     transition: { duration: 0.3, ease: "easeInOut" },
+  //   },
+  // };
+
+
   return (
     <>
       <nav className="container mx-auto flex justify-center w-full gap-6 py-2 ">
         {/* menu */}
         <div className="bg-blue-500/30 backdrop-sepia  flex flex-col w-full md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
-          <div className="flex items-center md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)}>
+          <div className="flex items-center md:hidden ">
+            <div onClick={() => setIsOpen(!isOpen)} >
               <Menu />
-            </button>
+            </div>
+
+            {/* <motion.div
+          className="flex flex-col md:flex-row gap-4 md:gap-7 w-full absolute md:static top-12 left-0 md:top-auto md:left-auto bg-blue-500/30 md:bg-transparent p-2 md:p-0 rounded-2xl md:rounded-none"
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          variants={menuVariants}
+          >
+          </motion.div> */}
             <Link
               href="/"
               className="ml-20 font-serif font-bold text-xl hover:bg-gray-500 p-2 rounded-sm duration-500 ease-in-out text-center md:text-left "
