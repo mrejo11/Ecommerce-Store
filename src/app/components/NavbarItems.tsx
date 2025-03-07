@@ -1,20 +1,39 @@
 "use client";
 import Link from "next/link";
-import { Search, UserRound, ShoppingCart, Menu } from "lucide-react";
+import { Search, UserRound, ShoppingCart, Menu,X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {motion} from "framer-motion"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const searchRef=useRef<HTMLDivElement | null>(null) //mraga baraye input
   const handleLinkClick = () => {
     if (window.innerWidth < 768) {
       // فقط در موبایل (عرض کمتر از 768px)
       setIsOpen(false);
     }
   };
+
+  const handleSearchClick=()=>{
+    setIsSearchActive(!isSearchActive)
+  }
+  
+  useEffect(()=>{
+function handleClickOutside(event:MouseEvent){
+  if(searchRef.current && !searchRef.current.contains(event.target as Node)&&isSearchActive){
+    setIsSearchActive(false)
+  }
+}
+
+  document.addEventListener("mousedown",handleClickOutside)
+
+return()=>{
+  document.removeEventListener("mousedown",handleClickOutside)
+}
+  },[isSearchActive])
 
   return (
     <>
@@ -97,15 +116,22 @@ export default function NavbarItems() {
             >
               Appliances
             </Link>
-            <div className="flex flex-col md:flex-row gap-8 md:items-center md:gap-4 ml-1 md:ml-8 cursor-pointer">
-              <div className="flex items-center ">
-                <Search color="#000" />
-                {isOpen ? (
-                  <Input width="100%" placeholder="Serach" className="ml-2" />
-                ) : (
-                  ""
+            <div className="flex flex-col md:flex-row gap-8 md:items-center md:gap-4 ml-1 md:ml-8 cursor-pointer relative">
+                <div className="flex items-center">
+                  <button onClick={handleSearchClick}>
+                    {isSearchActive ? <X color="#000" /> : <Search color="#000" />}
+                  </button>
+                </div>
+
+               {isSearchActive && (
+                <div ref={searchRef}>
+                  <Input
+                    autoFocus
+                    placeholder="Search..."
+                    className="absolute top-10 left-0 w-40 md:w-64 border border-gray-300 p-2 rounded-md shadow-md bg-white"
+                  />
+                  </div>
                 )}
-              </div>
 
               <div className="flex items-center md:hidden">
                 <UserRound color="#000" />
