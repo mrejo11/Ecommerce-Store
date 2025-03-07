@@ -25,7 +25,7 @@ export default function NavbarItems() {
     transition={{duration:0.5}}
     >
         {/* menu */}
-        <div className="bg-blue-500/30 backdrop-sepia  flex flex-col w-full md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
+        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 backdrop-sepia  flex flex-col w-full md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
           <div className="flex items-center md:hidden ">
             <div onClick={() => setIsOpen(!isOpen)}>
               <Menu />
