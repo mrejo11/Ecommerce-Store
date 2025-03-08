@@ -19,7 +19,7 @@ function SampleNextArrow(props: SamplePrevArrowProps) {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <span className="text-gray-700 bg-gray-400 text-xl"><ChevronRight /></span>
+      <div className="text-gray-600 bg-gray-400 rounded text-xl -translate-x-24  "><ChevronRight /></div>
     </div>
   );
 }
@@ -32,7 +32,7 @@ function SamplePrevArrow(props: SamplePrevArrowProps) {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <span className="text-gray-600 text-xl "><ChevronLeft /></span>
+      <div className="text-gray-600 bg-gray-400 rounded text-xl translate-x-24"><ChevronLeft /></div>
     </div>
   );
 }
@@ -42,6 +42,8 @@ function ResponsiveSlider() {
   const settings = {
     dots: true,
     infinite: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -60,7 +62,7 @@ function ResponsiveSlider() {
     <div className="w-full max-w-[1200px] mx-auto mt-2">
       <Slider {...settings}>
         <div className="relative w-full h-[300px]">
-          <Image src="/big-sale-discounts-products_23-2150336669.avif" alt="slider" fill />
+          <Image src="/big-sale-discounts-products_23-2150336669.avif" alt="slider" fill  />
         </div>
         <div className="relative w-full h-[300px]">
           <Image src="/black-friday-super-sale-web-banner-template_120329-2158.avif" alt="slider" fill />
