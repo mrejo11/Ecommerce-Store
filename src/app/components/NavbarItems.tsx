@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button";
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
-  const searchRef=useRef<HTMLDivElement | null>(null) //mraga baraye input
+  const searchRef=useRef<HTMLDivElement | null>(null) //margah baraye input
+
+
   const handleLinkClick = () => {
     if (window.innerWidth < 768) {
       // فقط در موبایل (عرض کمتر از 768px)
@@ -23,6 +25,9 @@ export default function NavbarItems() {
   
   useEffect(()=>{
 function handleClickOutside(event:MouseEvent){
+  // console.log("target:", event.target);
+  // console.log("contains:", searchRef.current?.contains(event.target as Node));
+  // console.log("!contains:", !searchRef.current?.contains(event.target as Node));
   if(searchRef.current && !searchRef.current.contains(event.target as Node)&&isSearchActive){
     setIsSearchActive(false)
   }
@@ -44,7 +49,7 @@ return()=>{
     transition={{duration:0.5}}
     >
         {/* menu */}
-        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 backdrop-sepia  flex flex-col w-full md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
+        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
           <div className="flex items-center md:hidden ">
             <div onClick={() => setIsOpen(!isOpen)}>
               <Menu />
@@ -168,4 +173,4 @@ return()=>{
   );
 }
 
-                  
+
