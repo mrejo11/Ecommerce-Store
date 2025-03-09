@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import Image from "next/image";
 import "slick-carousel/slick/slick.css";  
 import "slick-carousel/slick/slick-theme.css";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
 interface SamplePrevArrowProps {
   className?: string;
   style?: React.CSSProperties;
@@ -15,11 +15,10 @@ function SampleNextArrow(props: SamplePrevArrowProps) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className} flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full cursor-pointer hover:bg-gray-600 hover:scale-110 transition-all duration-300 absolute right-4 z-10`}
+      className={`${className} text-gray-600 bg-gray-400 rounded text-xl -translate-x-24  cursor-pointer hover:bg-gray-600 hover:scale-110 transition-all duration-300 absolute right-4 z-10`}
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <div className="text-gray-600 bg-gray-400 rounded text-xl -translate-x-24  "><ChevronRight /></div>
     </div>
   );
 }
@@ -28,11 +27,10 @@ function SamplePrevArrow(props: SamplePrevArrowProps) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`${className} flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full cursor-pointer hover:bg-gray-600 hover:scale-110 transition-all duration-300 absolute left-4 z-10`}
+      className={`${className} text-gray-600 bg-gray-400 rounded text-xl translate-x-24 cursor-pointer hover:bg-gray-600 hover:scale-110 transition-all duration-300 absolute left-4 z-10`}
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <div className="text-gray-600 bg-gray-400 rounded text-xl translate-x-24"><ChevronLeft /></div>
     </div>
   );
 }
