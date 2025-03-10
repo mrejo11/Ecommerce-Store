@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
+import { Skeleton } from "@/components/ui/skeleton";
 interface ShowProduct {
   id: number;
   title: string;
@@ -63,43 +63,57 @@ function ProductList() {
     : [];
 
   //rendered
-  if (isLoading) return <div>is Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-14">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div key={index} className="flex flex-col items-center space-y-4">
+            <Skeleton className="h-[200px] w-[250px] rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  
   if (error) return <div>error for Loading product</div>;
 
   return (
     <div className="container mt-6 mx-auto gap-4 mb-4">
-        <h1 className="mb-4 text-2xl font-bold bg-amber-400">sort By</h1>
-        <div className="flex gap-2">
-      <span
-        className={`${
-          sortField === "default"
-            ? "cursor-pointer p-2 bg-gray-800 text-amber-50 rounded-full transition-all ease-in-out duration-500"
-            : "cursor-pointer p-2  text-black rounded"
-        }`}
-        onClick={() => handleSort("default")}
-      >
-        All {sortField === "price" && sortOrder === "asc"}
-      </span>
-      <span
-        className={`${
-          sortField === "price"
-            ? "cursor-pointer p-2 bg-gray-800 text-amber-50 rounded-full transition-all ease-in-out duration-500"
-            : "cursor-pointer p-2  text-black rounded"
-        }`}
-        onClick={() => handleSort("price")}
-      >
-        Price {sortField === "price" && sortOrder === "asc"}
-      </span>
-      <span
-        className={`${
-          sortField === "title"
-            ? "cursor-pointer p-2 bg-gray-800 text-amber-50 rounded-full transition-all ease-in-out duration-500"
-            : "cursor-pointer p-2  text-black rounded"
-        }`}
-        onClick={() => handleSort("title")}
-      >
-        Title {sortField === "title" && sortOrder === "asc"}
-      </span>
+      <h1 className="mb-4 text-2xl font-bold bg-amber-400">sort By</h1>
+      <div className="flex gap-2">
+        <span
+          className={`${
+            sortField === "default"
+              ? "cursor-pointer p-2 bg-gray-800 text-amber-50 dark:text-amber-50 rounded-full transition-all ease-in-out duration-500"
+              : "cursor-pointer p-2  text-black rounded"
+          }`}
+          onClick={() => handleSort("default")}
+        >
+          All {sortField === "price" && sortOrder === "asc"}
+        </span>
+        <span
+          className={`${
+            sortField === "price"
+              ? "cursor-pointer p-2 bg-gray-800 text-amber-50 rounded-full transition-all ease-in-out duration-500"
+              : "cursor-pointer p-2  text-black rounded"
+          }`}
+          onClick={() => handleSort("price")}
+        >
+          Price {sortField === "price" && sortOrder === "asc"}
+        </span>
+        <span
+          className={`${
+            sortField === "title"
+              ? "cursor-pointer p-2 bg-gray-800 text-amber-50 rounded-full transition-all ease-in-out duration-500"
+              : "cursor-pointer p-2  text-black rounded"
+          }`}
+          onClick={() => handleSort("title")}
+        >
+          Title {sortField === "title" && sortOrder === "asc"}
+        </span>
       </div>
       {sortedProducts.map((product) => (
         <div className="flex items-center ml-l" key={product.id}>
