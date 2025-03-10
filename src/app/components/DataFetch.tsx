@@ -1,25 +1,25 @@
 "use client";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import getProduct from "@/app/actions/index"
+// interface ShowProduct {
+//   id: number;
+//   title: string;
+//   price: number;
+//   description: string;
+// }
 
-interface ShowProduct {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-}
-
-//data Fetch
-async function getProduct(): Promise<ShowProduct[] | undefined> {
-  try {
-    const res = await fetch("https://fakestoreapi.in/api/products", {});
-    if (!res.ok) throw new Error("fail data fetch");
-    const data = await res.json();
-    return data.products;
-  } catch (error) {
-    console.error("Error fetching:", error);
-  }
-}
+// //data Fetch
+// async function getProduct(): Promise<ShowProduct[] | undefined> {
+//   try {
+//     const res = await fetch("https://fakestoreapi.in/api/products", {});
+//     if (!res.ok) throw new Error("fail data fetch");
+//     const data = await res.json();
+//     return data.products;
+//   } catch (error) {
+//     console.error("Error fetching:", error);
+//   }
+// }
 
 // state for sort
 function ProductList() {
