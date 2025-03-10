@@ -2,24 +2,25 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-interface ShowProduct {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-}
+import getProduct from "../actions";
+// interface ShowProduct {
+//   id: number;
+//   title: string;
+//   price: number;
+//   description: string;
+// }
 
-//data Fetch
-async function getProduct(): Promise<ShowProduct[] | undefined> {
-  try {
-    const res = await fetch("https://fakestoreapi.in/api/products", {});
-    if (!res.ok) throw new Error("fail data fetch");
-    const data = await res.json();
-    return data.products;
-  } catch (error) {
-    console.error("Error fetching:", error);
-  }
-}
+// //data Fetch
+// async function getProduct(): Promise<ShowProduct[] | undefined> {
+//   try {
+//     const res = await fetch("https://fakestoreapi.in/api/products", {});
+//     if (!res.ok) throw new Error("fail data fetch");
+//     const data = await res.json();
+//     return data.products;
+//   } catch (error) {
+//     console.error("Error fetching:", error);
+//   }
+// }
 
 // state for sort
 function ProductList() {
@@ -87,8 +88,8 @@ function ProductList() {
         <span
           className={`${
             sortField === "default"
-              ? "cursor-pointer p-2 bg-gray-800 text-amber-50 dark:text-amber-50 rounded-full transition-all ease-in-out duration-500"
-              : "cursor-pointer p-2  text-black rounded"
+              ? "cursor-pointer p-2 bg-gray-800 text-amber-50  rounded-full transition-all ease-in-out duration-500"
+              : "cursor-pointer p-2  text-black dark:text-amber-50 rounded"
           }`}
           onClick={() => handleSort("default")}
         >
