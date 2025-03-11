@@ -3,6 +3,7 @@ interface ShowProduct {
     title: string;
     price: number;
     description: string;
+    image:string;
   }
   
   //data Fetch

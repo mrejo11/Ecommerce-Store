@@ -3,25 +3,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import getProduct from "../actions";
-// interface ShowProduct {
-//   id: number;
-//   title: string;
-//   price: number;
-//   description: string;
-// }
-
-// //data Fetch
-// async function getProduct(): Promise<ShowProduct[] | undefined> {
-//   try {
-//     const res = await fetch("https://fakestoreapi.in/api/products", {});
-//     if (!res.ok) throw new Error("fail data fetch");
-//     const data = await res.json();
-//     return data.products;
-//   } catch (error) {
-//     console.error("Error fetching:", error);
-//   }
-// }
-
+import Image from "next/image";
 // state for sort
 function ProductList() {
   const [sortField, setSortField] = useState<"price" | "title" | "default">(
@@ -78,7 +60,7 @@ function ProductList() {
         ))}
       </div>
     );
-  
+
   if (error) return <div>error for Loading product</div>;
 
   return (
@@ -116,11 +98,17 @@ function ProductList() {
           Title {sortField === "title" && sortOrder === "asc"}
         </span>
       </div>
-      {sortedProducts.map((product) => (
-        <div className="flex items-center ml-l" key={product.id}>
-          {product.title} - ${product.price}
-        </div>
-      ))}
+
+      <div className="grid grid-cols-1 w-full md:grid-cols-4 mt-4 gap-4 cursor-pointer">
+        {sortedProducts.map((product)=>{
+          return <div key={product.id}
+          className="flex flex-col border rounded-2xl shadow-gray-800 items-center space-y-4 ">
+            <Image src={product.image} alt="produc image" width={150} height={100} className="hover:scale-110 mt-4 transition-all ease-in-out duration-300"/>
+            <div className=" w-64 truncate">{product.title}</div>
+            <div className="text-2xl">${product.price}</div>
+          </div>
+        })}
+      </div>
     </div>
   );
 }
