@@ -119,28 +119,12 @@ window.scrollTo({top:0 , behavior:"smooth"})
       </div>
 
       {/* Product list */}
-      <div className="grid grid-cols-1 w-full md:grid-cols-4 mt-4 gap-4 cursor-pointer">
-        {currentProducts.map((product) => (
-          <div
-            key={product.id}
-            className="flex flex-col border rounded-2xl shadow-gray-800 items-center space-y-4"
-          >
-            <Image
-              src={product.image}
-              alt="Product Image"
-              width={150}
-              height={100}
-              className="hover:scale-110 mt-4 transition-all ease-in-out duration-300"
-            />
-            <div className="w-64 truncate">{product.title}</div>
-            <div className="text-2xl">${product.price}</div>
-          </div>
-        ))}
-      </div>
+
+
 
       {/* Pagination with page numbers */}
       <div className="mt-4 flex items-center justify-center gap-4">
-        <Button onClick={handlePrevious} disabled={currentPage === 1}>
+        <Button onClick={handlePrevious} disabled={currentPage === 1} className="cursor-pointer">
           previous
         </Button>
         <div className="flex gap-2">
@@ -148,7 +132,7 @@ window.scrollTo({top:0 , behavior:"smooth"})
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 rounded ${
+              className={`cursor-pointer px-3 py-1 rounded ${
                 currentPage === page
                   ? "font-bold bg-gray-800 text-white"
                   : "bg-gray-200 text-black hover:bg-gray-300"
@@ -158,7 +142,7 @@ window.scrollTo({top:0 , behavior:"smooth"})
             </button>
           ))}
         </div>
-        <Button onClick={handleNext} disabled={currentPage === totalPage}>
+        <Button onClick={handleNext} disabled={currentPage === totalPage} className="cursor-pointer">
         Next
         </Button>
       </div>
