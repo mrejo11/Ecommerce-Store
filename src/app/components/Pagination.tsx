@@ -1,5 +1,5 @@
 import React from "react";
-import { setCurrentPage } from "../../store/slice"; // مسیر Redux خودت رو بذار
+import { setCurrentPage } from "../../store/slice"; 
 import { Button } from "@/components/ui/button";
 
 
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 interface PaginationProps {
   currentPage: number;
   totalPage: number;
-  dispatch: (action:unknown) => void; // نوع دقیق‌تر برای Redux dispatch بذار اگه نیازه
+  dispatch: (action:unknown) => void; 
   handlePrevious: () => void;
   handleNext: () => void;
 }
@@ -20,13 +20,13 @@ const Pagination: React.FC<PaginationProps> = ({
   handleNext,
 }) => {
   const getPaginationItems = () => {
-    const pages: (number | string)[] = []; // نوع آرایه مشخص شده
+    const pages: (number | string)[] = []; 
 
     if (totalPage <= 4) {
       return Array.from({ length: totalPage }, (_, index) => index + 1);
     }
 
-    pages.push(1); // صفحه اول
+    pages.push(1); //first Page
 
 
 
@@ -38,8 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
       pages.push("...");
     }
 
-    pages.push(totalPage); // صفحه آخر
-
+    pages.push(totalPage); // Last Page
     return pages;
   };
 
