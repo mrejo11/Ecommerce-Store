@@ -5,10 +5,11 @@ import { useSelector,useDispatch } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import getProduct from "../actions";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { setSort,setCurrentPage } from "@/store/slice";
 import { RootState,AppDispatch } from "@/store/store";
 import {SortField } from "@/type";
+import Pagination from "./Pagination";
 
 
 
@@ -148,28 +149,14 @@ window.scrollTo({top:0 , behavior:"smooth"})
       </div>
 
       {/* Pagination with page numbers */}
-      <div className="mt-4 flex items-center justify-center gap-4">
-        <Button onClick={handlePrevious} disabled={currentPage === 1} className="cursor-pointer">
-          previous
-        </Button>
-        <div className="flex gap-2">
-          {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => dispatch(setCurrentPage(page))}
-              className={`cursor-pointer px-3 py-1 rounded ${
-                currentPage === page
-                  ? "font-bold bg-gray-800 text-white"
-                  : "bg-gray-200 text-black hover:bg-gray-300"
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-        </div>
-        <Button onClick={handleNext} disabled={currentPage === totalPage} className="cursor-pointer">
-        Next
-        </Button>
+      <div className="container mt-4 flex items-center justify-center gap-4">
+        <Pagination 
+           currentPage={currentPage}
+           totalPage={totalPage}
+           dispatch={dispatch}
+           handlePrevious={handlePrevious}
+           handleNext={handleNext}
+        />
       </div>
     </div>
   );
