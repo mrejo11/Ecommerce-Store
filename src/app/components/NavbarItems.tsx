@@ -5,17 +5,24 @@ import { Input } from "@/components/ui/input";
 import {motion} from "framer-motion"
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { setCurrentPage } from "@/store/slice";
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
   const searchRef=useRef<HTMLDivElement | null>(null) //margah baraye input
 
+  const dispatch=useDispatch<AppDispatch>()
 
+  const handleHeaderClick=()=>{
+    dispatch(setCurrentPage(1))
+  }
   const handleLinkClick = () => {
     if (window.innerWidth < 768) {
       // فقط در موبایل (عرض کمتر از 768px)
       setIsOpen(false);
+      dispatch(setCurrentPage(1))
     }
   };
 
@@ -50,35 +57,24 @@ return()=>{
     >
         {/* menu */}
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
-          <div className="flex items-center md:hidden ">
+          <div className="flex items-center ">
             <div onClick={() => setIsOpen(!isOpen)}>
-              <Menu />
+              <Menu className="md:hidden"/>
             </div>
 
             <Link
               href="/"
               className="ml-12 font-serif font-bold text-xl hover:bg-gray-500 p-2 rounded-sm duration-500 ease-in-out text-center md:text-left "
+              onClick={handleHeaderClick}
             >
               TechZone
             </Link>
           </div>
           <div
             className={`flex-col md:flex-row gap-2 md:gap-7 w-full ${
-              isOpen ? "flex" : "hidden md:flex"
+              isOpen ? "flex md:hidden" : "hidden md:flex"
             }`}
           >
-            <Link
-              href="/"
-              className={
-                !isOpen
-                  ? "font-serif font-bold text-xl hover:bg-gray-500 p-2 rounded-sm duration-500 ease-in-out text-center md:text-left"
-                  : "hidden"
-              }
-              onClick={handleLinkClick}
-            >
-              TechZone
-            </Link>
-
             <Link
               href="/Tv"
               className="block hover:bg-gray-500 p-2 rounded-sm duration-500 ease-in-out duration-300"

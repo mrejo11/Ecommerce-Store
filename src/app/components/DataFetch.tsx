@@ -1,16 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSelector,useDispatch } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import getProduct from "../actions";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { setSort,setCurrentPage } from "@/store/slice";
+import { RootState,AppDispatch } from "@/store/store";
+import {SortField } from "@/type";
+
+
+
 
 function ProductList() {
-  const [sortField, setSortField] = useState<"price" | "title" | "default">("default");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const dispatch=useDispatch<AppDispatch>()
+  const {sortField,sortOrder,currentPage}=useSelector((state:RootState)=>state.productFilters)
 
+
+  useEffect(()=>{
+    dispatch(setCurrentPage(1))
+    dispatch(setSort({field:'default' , order:'asc'}))
+  },[dispatch])
 
   useEffect(()=>{
 window.scrollTo({top:0 , behavior:"smooth"})
@@ -24,11 +35,9 @@ window.scrollTo({top:0 , behavior:"smooth"})
   });
 
   // Sort handler with page reset
-  const handleSort = (field: "price" | "title" | "default") => {
+  const handleSort = (field: SortField) => {
     const newOrder = sortField === field && sortOrder === "asc" ? "desc" : "asc";
-    setSortField(field);
-    setSortOrder(newOrder);
-    setCurrentPage(1); // Reset to page 1 when sorting changes
+   dispatch(setSort({field,order:newOrder}));
   };
 
   // Sort the products
@@ -55,11 +64,11 @@ window.scrollTo({top:0 , behavior:"smooth"})
 
   // Pagination handlers
   const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
+    if (currentPage > 1) dispatch(setCurrentPage(currentPage - 1));
    
   };
   const handleNext = () => {
-    if (currentPage < totalPage) setCurrentPage(currentPage + 1);
+    if (currentPage < totalPage) dispatch(setCurrentPage(currentPage + 1));
     
   };
 
@@ -119,8 +128,24 @@ window.scrollTo({top:0 , behavior:"smooth"})
       </div>
 
       {/* Product list */}
-
-
+      <div className="container mx-auto grid grid-cols-1 w-full md:grid-cols-4 mt-4 gap-4 cursor-pointer">
+        {currentProducts.map((product) => (
+          <div
+            key={product.id}
+            className="flex flex-col border rounded-2xl shadow-gray-800 items-center space-y-4"
+          >
+            <Image
+              src={product.image}
+              alt="Product Image"
+              width={150}
+              height={100}
+              className="hover:scale-110 mt-4 transition-all ease-in-out duration-300"
+            />
+            <div className="w-32 truncate md:w-42 ">{product.title}</div>
+            <div className="text-2xl before:content-['$'] before:text-green-500">{product.price}</div>
+          </div>
+        ))}
+      </div>
 
       {/* Pagination with page numbers */}
       <div className="mt-4 flex items-center justify-center gap-4">
@@ -131,7 +156,7 @@ window.scrollTo({top:0 , behavior:"smooth"})
           {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
             <button
               key={page}
-              onClick={() => setCurrentPage(page)}
+              onClick={() => dispatch(setCurrentPage(page))}
               className={`cursor-pointer px-3 py-1 rounded ${
                 currentPage === page
                   ? "font-bold bg-gray-800 text-white"

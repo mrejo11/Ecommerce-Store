@@ -5,6 +5,8 @@ import { ThemeProvider } from "./providers/theme-provider";
 import NavbarItems from "./components/NavbarItems";
 import { QueryClient,QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 
 
@@ -31,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
+        <Provider store={store}>
         <div>
           <NavbarItems />
         </div>
@@ -44,6 +47,7 @@ export default function RootLayout({
         {children}
       </ThemeProvider>
     </QueryClientProvider>
+    </Provider>
       </body>
     </html>
   );
