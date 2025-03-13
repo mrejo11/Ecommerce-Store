@@ -1,35 +1,40 @@
 "use client";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import getProduct from "../actions";
 import Image from "next/image";
 // import { Button } from "@/components/ui/button";
-import { setSort,setCurrentPage } from "@/store/slice";
-import { RootState,AppDispatch } from "@/store/store";
-import {SortField } from "@/type";
+import { setSort, setCurrentPage } from "@/store/sortSlice";
+import { RootState, AppDispatch } from "@/store/store";
+import { SortField } from "@/type";
 import Pagination from "./Pagination";
-
-
-
+import { openModal } from "@/store/modalSlice";
+import { Product } from "@/type";
+import ProductModal from "./ProductModal"
 
 function ProductList() {
-  const dispatch=useDispatch<AppDispatch>()
-  const {sortField,sortOrder,currentPage}=useSelector((state:RootState)=>state.productFilters)
+  const dispatch = useDispatch<AppDispatch>();
+  const { sortField, sortOrder, currentPage } = useSelector(
+    (state: RootState) => state.productFilters
+  );
 
+  useEffect(() => {
+    dispatch(setCurrentPage(1));
+    dispatch(setSort({ field: "default", order: "asc" }));
+  }, [dispatch]);
 
-  useEffect(()=>{
-    dispatch(setCurrentPage(1))
-    dispatch(setSort({field:'default' , order:'asc'}))
-  },[dispatch])
-
-  useEffect(()=>{
-window.scrollTo({top:0 , behavior:"smooth"})
-  },[currentPage])
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   // Fetch data with useQuery
-  const { data: products, isLoading, error } = useQuery({
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: getProduct,
     staleTime: 86400 * 1000,
@@ -37,8 +42,9 @@ window.scrollTo({top:0 , behavior:"smooth"})
 
   // Sort handler with page reset
   const handleSort = (field: SortField) => {
-    const newOrder = sortField === field && sortOrder === "asc" ? "desc" : "asc";
-   dispatch(setSort({field,order:newOrder}));
+    const newOrder =
+      sortField === field && sortOrder === "asc" ? "desc" : "asc";
+    dispatch(setSort({ field, order: newOrder }));
   };
 
   // Sort the products
@@ -56,6 +62,10 @@ window.scrollTo({top:0 , behavior:"smooth"})
       })
     : [];
 
+    // هندل کردن کلیک روی محصول
+  const handleProductClick = (product: Product) => {
+    dispatch(openModal(product)); // باز کردن مودال
+  };
   // Pagination logic
   const itemsPerPage = 20;
   const totalPage = Math.ceil(sortedProducts.length / itemsPerPage);
@@ -66,11 +76,9 @@ window.scrollTo({top:0 , behavior:"smooth"})
   // Pagination handlers
   const handlePrevious = () => {
     if (currentPage > 1) dispatch(setCurrentPage(currentPage - 1));
-   
   };
   const handleNext = () => {
     if (currentPage < totalPage) dispatch(setCurrentPage(currentPage + 1));
-    
   };
 
   // Loading state
@@ -133,6 +141,7 @@ window.scrollTo({top:0 , behavior:"smooth"})
         {currentProducts.map((product) => (
           <div
             key={product.id}
+            onClick={() => handleProductClick(product)}
             className="flex flex-col border rounded-2xl shadow-gray-800 items-center space-y-4"
           >
             <Image
@@ -143,19 +152,23 @@ window.scrollTo({top:0 , behavior:"smooth"})
               className="hover:scale-110 mt-4 transition-all ease-in-out duration-300"
             />
             <div className="w-32 truncate md:w-42 ">{product.title}</div>
-            <div className="text-2xl before:content-['$'] before:text-green-500">{product.price}</div>
+            <div className="text-2xl before:content-['$'] before:text-green-500">
+              {product.price}
+            </div>
           </div>
         ))}
       </div>
 
+      <ProductModal />
+
       {/* Pagination with page numbers */}
       <div className="container mt-4 flex items-center justify-center gap-4">
-        <Pagination 
-           currentPage={currentPage}
-           totalPage={totalPage}
-           dispatch={dispatch}
-           handlePrevious={handlePrevious}
-           handleNext={handleNext}
+        <Pagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          dispatch={dispatch}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
         />
       </div>
     </div>

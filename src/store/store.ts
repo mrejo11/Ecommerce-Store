@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { productFilterReducer } from './slice'
-
+import { productFilterReducer } from './sortSlice'
+import { ProductModalReducer } from './modalSlice'
 
 
 
 export const store = configureStore({
     reducer: {
-        productFilters: productFilterReducer
+        productFilters: productFilterReducer,
+        productModal:ProductModalReducer
 
     },
 })

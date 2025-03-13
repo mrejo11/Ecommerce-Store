@@ -1,13 +1,11 @@
 import React from "react";
-import { setCurrentPage } from "../../store/slice"; 
+import { setCurrentPage } from "../../store/sortSlice";
 import { Button } from "@/components/ui/button";
 
-
-// تعریف نوع پراپس‌ها
 interface PaginationProps {
   currentPage: number;
   totalPage: number;
-  dispatch: (action:unknown) => void; 
+  dispatch: (action: unknown) => void;
   handlePrevious: () => void;
   handleNext: () => void;
 }
@@ -20,15 +18,13 @@ const Pagination: React.FC<PaginationProps> = ({
   handleNext,
 }) => {
   const getPaginationItems = () => {
-    const pages: (number | string)[] = []; 
+    const pages: (number | string)[] = [];
 
     if (totalPage <= 4) {
       return Array.from({ length: totalPage }, (_, index) => index + 1);
     }
 
     pages.push(1); //first Page
-
-
 
     if (currentPage > 1 && currentPage < totalPage) {
       pages.push(currentPage);
@@ -56,7 +52,9 @@ const Pagination: React.FC<PaginationProps> = ({
         {getPaginationItems().map((page, index) => (
           <button
             key={index}
-            onClick={() => typeof page === "number" && dispatch(setCurrentPage(page))}
+            onClick={() =>
+              typeof page === "number" && dispatch(setCurrentPage(page))
+            }
             className={`cursor-pointer px-3 py-1 rounded ${
               currentPage === page
                 ? "font-bold bg-gray-800 text-white"

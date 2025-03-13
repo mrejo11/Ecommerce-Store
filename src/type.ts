@@ -3,6 +3,10 @@ export interface Product {
     title:string
     price:number;
     image:string;
+    brand:string;
+    model:string
+    color:string
+    description:string;
 }
 
 export type SortField="price"|"title"|"default"
