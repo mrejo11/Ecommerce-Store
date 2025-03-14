@@ -50,24 +50,25 @@ function ProductModal() {
       animate={isOpen ? "visible" : "hidden"}
       onClick={() => dispatch(closeModal())}
     >
+     
       <motion.div
-        className="grid md:grid-cols-2 bg-white p-5 rounded-lg w-full max-w-7xl h-screen md:h-3/4 mx-4"
+        className="grid md:grid-cols-2 bg-white p-5 rounded-lg w-full max-w-10/12 h-screen md:h-[90vh]"
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="hidden"
         onClick={(e) => e.stopPropagation()}
-      >
-        <div className="-mb-24 md:flex md:justify-center md:items-center">
+      >       
+        <div className=" md:flex items-center ">
           <Image
             src={selectedProduct.image}
             alt="product image"
-            width={600}
+            width={500}
             height={300}
-            className=" sm:w-[400px] md:w-[500px] lg:w-[600px] h-auto"
+           
           />
         </div>
-        <div className="flex flex-col justify-center">
+        <div className=" flex flex-col justify-center">
           <h2 className="text-xl font-bold mb-2">
             {selectedProduct.title.slice(0, 100)}
           </h2>
@@ -86,10 +87,11 @@ function ProductModal() {
           <h3 className="hidden md:flex md:text-xl font-bold mt-2">
             About this product:
           </h3>
-          <p className="hidden md:flex text-gray-700 mb-2">
-            {selectedProduct.description}
+          <p className="hidden md:flex text-gray-700 mb-2 md:truncat md:w-150">
+            {selectedProduct.description.slice(0,550)}
           </p>
           <div className="flex gap-2">
+
             <Button
               className={`mt-2 rounded-2xl ${
                 isAdd ? "bg-red-600 hover:bg-red-400" : ""
@@ -102,11 +104,12 @@ function ProductModal() {
             
             {/* delete button */}
             <button
-              className="absolute top-0 right-4 md:top-32 md:right-[320px] bg-white text-red-600 px-4 py-2 rounded hover:bg-red-400 hover:text-white"
+              className=" md:-translate-y-[480px] md:translate-x-[440px] bg-white text-red-600 px-4 py-2 rounded hover:bg-red-400 hover:text-white"
               onClick={() => dispatch(closeModal())}
             >
               <X />
             </button>
+
           </div>
         </div>
       </motion.div>

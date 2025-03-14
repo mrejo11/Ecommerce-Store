@@ -62,9 +62,9 @@ function ProductList() {
       })
     : [];
 
-    // هندل کردن کلیک روی محصول
+    // handle click on product
   const handleProductClick = (product: Product) => {
-    dispatch(openModal(product)); // باز کردن مودال
+    dispatch(openModal(product));  
   };
   // Pagination logic
   const itemsPerPage = 20;
