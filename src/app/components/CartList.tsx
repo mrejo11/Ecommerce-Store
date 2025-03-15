@@ -14,7 +14,7 @@ export default function CartList() {
     dispatch(removeCart(product));
   };
 
-//   const handleClick=()=>{
+//   cOnst handleClick=()=>{
 //     setCount(count+1)
 //   }
 
