@@ -159,6 +159,7 @@ function ProductList() {
         ))}
       </div>
 
+      {/* open madoal component */}
       <ProductModal />
 
       {/* Pagination with page numbers */}

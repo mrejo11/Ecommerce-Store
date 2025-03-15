@@ -1,7 +1,14 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "@/type";
 
-
+// تابع برای گرفتن سبد خرید از localStorage
+const loadCartFromStorage = (): Product[] => {
+    if (typeof window !== "undefined") { // چک کردن اینکه توی مرورگر هستیم
+      const savedCart = localStorage.getItem("cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
+  };
 interface ProductModalState{
     isOpen:boolean;
     selectedProduct:Product|null;
@@ -11,7 +18,7 @@ interface ProductModalState{
 const initialState:ProductModalState={
     isOpen:false,
     selectedProduct:null,
-    cart:[],
+    cart:loadCartFromStorage(),
 }
 
 export const ProductModalsSlice=createSlice({
@@ -31,6 +38,7 @@ export const ProductModalsSlice=createSlice({
         //add product to buy basket
         addToCart(state,action:PayloadAction<Product>){
             state.cart.push(action.payload)
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         },
     }
 })

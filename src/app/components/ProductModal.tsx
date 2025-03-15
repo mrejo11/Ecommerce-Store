@@ -51,7 +51,7 @@ function ProductModal() {
   onClick={() => dispatch(closeModal())}
 >
   <motion.div
-    className="relative grid md:grid-cols-2 bg-white p-5 rounded-lg w-full max-w-[80%] h-screen md:h-[80vh] overflow-auto"
+    className="relative grid md:grid-cols-2 bg-white p-5 rounded-lg w-full max-w-[80%] h-[90vh] md:h-[80vh] overflow-auto"
     variants={modalVariants}
     initial="hidden"
     animate="visible"

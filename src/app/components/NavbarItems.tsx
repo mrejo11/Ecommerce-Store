@@ -166,7 +166,9 @@ export default function NavbarItems() {
                 </div>
 
                 <div>
-                  <ShoppingCart color="#000" />
+                  <Link href="/Cart">
+                    <ShoppingCart color="#000" />
+                  </Link>
                 </div>
               </div>
             </div>
