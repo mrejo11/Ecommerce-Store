@@ -42,7 +42,7 @@ export const ProductModalsSlice = createSlice({
                 product.id===action.payload.id
             )
             if(existingProduct){
-                existingProduct.quantity+= 1 
+                existingProduct.quantity = (existingProduct.quantity || 0) + 1;
             }else{
                 state.cart.push({...action.payload,quantity:1})
 

@@ -6,7 +6,6 @@ interface ShowProduct {
   image: string;
 
   name: string;
-
   brand: string;
   model: string;
   color: string;
