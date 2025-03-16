@@ -48,7 +48,7 @@ export default function CartList() {
               </div>
               <div className="flex items-center gap-1">
                 <span
-                  className="text-xl bg-gray-100 rounded-full w-6 h-6 flex justify-center cursor-pointer"
+                  className="text-2xl bg-gray-100 rounded-full w-6 h-6 flex justify-center items-center cursor-pointer"
                   onClick={() =>
                     handleDecrement(product.id, product.quantity ?? 1)
                   }
@@ -62,7 +62,7 @@ export default function CartList() {
                   readOnly
                 />
                 <span
-                  className="text-xl bg-gray-100 rounded-full w-6 h-6 flex justify-center cursor-pointer"
+                  className="text-2xl bg-gray-100 rounded-full w-6 h-6 flex justify-center items-center cursor-pointer"
                   onClick={() =>
                     handleIncrement(product.id, product.quantity ?? 1)
                   }
@@ -84,10 +84,12 @@ export default function CartList() {
       </div>
 
       {/*  order summary */}
-      <div className="mt-4 md:mt-0 md:col-span-4 md:sticky md:top-4 bg-gray-100 p-4 rounded-xl shadow-lg w-full md:w-80 h-fit">
-        <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-        <p className="text-gray-600">Total items: {cart.length}</p>
-        <p className="text-gray-600">Total price: ${totalPrice}</p>
+      <div className="mt-4 md:mt-4 md:col-span-4 md:sticky md:top-4 bg-gray-100 p-4 rounded-xl shadow-lg w-full md:w-80 h-fit">
+        <h2 className="flex justify-center pb-2 border-b text-xl font-bold mb-4">Order Summary</h2>
+        <p className="text-gray-900">Total items: {cart.length}</p>
+        <p className="text-gray-900 pb-2 border-b">Delivery: <span className="text-green-600">Free</span></p>
+        <p className="text-gray-800 text-2xl font-bold">Subtotal : ${totalPrice}</p>
+        <button className="text-white p-2 bg-gray-700 hover:bg-gray-800 rounded-xl px-4 mt-4 cursor-pointer">procced to pay</button>
       </div>
     </div>
   );

@@ -6,11 +6,14 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import { AppDispatch, RootState } from "@/store/store";
 import { setCurrentPage } from "@/store/sortSlice";
+import { useSelector } from "react-redux";
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  //add number of items on shopping icon for show any items to shopping basket
+  const cart=useSelector((state:RootState)=>state.productModal.cart)
   const searchRef = useRef<HTMLDivElement | null>(null); //margah baraye input
 
   const dispatch = useDispatch<AppDispatch>();
@@ -60,7 +63,7 @@ export default function NavbarItems() {
           transition={{ duration: 0.5 }}
         >
           {/* menu */}
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
+          <div className=" bg-gradient-to-r from-teal-500 to-indigo-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
             <div className="flex items-center ">
               <div onClick={() => setIsOpen(!isOpen)}>
                 <Menu className="md:hidden" />
@@ -168,6 +171,11 @@ export default function NavbarItems() {
                 <div>
                   <Link href="/Cart">
                     <ShoppingCart color="#000" />
+                    {cart.length >0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {cart.length}
+                      </span>
+                    )}
                   </Link>
                 </div>
               </div>
