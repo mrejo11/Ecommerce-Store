@@ -7,6 +7,7 @@ export interface Product {
     model:string
     color:string
     description:string;
+    quantity:number
 }
 
 export type SortField="price"|"title"|"default"

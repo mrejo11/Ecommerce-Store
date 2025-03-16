@@ -37,7 +37,16 @@ export const ProductModalsSlice = createSlice({
         },
         //add product to buy basket
         addToCart(state, action: PayloadAction<Product>) {
-            state.cart.push(action.payload)
+            //find product by id
+            const existingProduct=state.cart.find((product)=>
+                product.id===action.payload.id
+            )
+            if(existingProduct){
+                existingProduct.quantity+= 1 
+            }else{
+                state.cart.push({...action.payload,quantity:1})
+
+            }
             //save product data after add product data in shopping cart
             localStorage.setItem("cart", JSON.stringify(state.cart));
         },
@@ -47,9 +56,18 @@ export const ProductModalsSlice = createSlice({
             })
             //save new arry in localstorage
             localStorage.setItem("cart", JSON.stringify(state.cart));
-        }
+        },
+        updateProductQuantity(state, action: PayloadAction<{ productId: number; newQuantity: number }>) {
+            const { productId, newQuantity } = action.payload;
+            const product = state.cart.find((item) => item.id === productId);
+            if (product) {
+              product.quantity = newQuantity;
+              localStorage.setItem("cart", JSON.stringify(state.cart));
+            }
+        },
+        
     }
 })
 
-export const { openModal, closeModal, addToCart, removeCart } = ProductModalsSlice.actions;
+export const { openModal, closeModal, addToCart, removeCart,updateProductQuantity } = ProductModalsSlice.actions;
 export const ProductModalReducer = ProductModalsSlice.reducer;

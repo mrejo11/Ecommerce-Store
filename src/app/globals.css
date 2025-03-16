@@ -123,3 +123,11 @@
   }
 }
 
+.custom-scrollbar-hide {
+  scrollbar-width: none; /* برای Firefox */
+  -ms-overflow-style: none; /* برای IE 10+ */
+}
+.custom-scrollbar-hide::-webkit-scrollbar {
+  display: none; /* برای Chrome, Safari و Opera */
+}
+
