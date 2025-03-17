@@ -12,7 +12,7 @@ import { SortField } from "@/type";
 import Pagination from "./Pagination";
 import { openModal } from "@/store/modalSlice";
 import { Product } from "@/type";
-import ProductModal from "./ProductModal"
+import ProductModalWindow from "./ProductModalWindow";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -64,7 +64,7 @@ function ProductList() {
 
     // handle click on product
   const handleProductClick = (product: Product) => {
-    dispatch(openModal(product));  
+    dispatch(openModal(product));  //show open modal window
   };
   // Pagination logic
   const itemsPerPage = 20;
@@ -159,8 +159,8 @@ function ProductList() {
         ))}
       </div>
 
-      {/* open madoal component */}
-      <ProductModal />
+      {/* open madoalWindow component */}
+      <ProductModalWindow />
 
       {/* Pagination with page numbers */}
       <div className="container mt-4 flex items-center justify-center gap-4">

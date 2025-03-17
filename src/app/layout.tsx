@@ -34,8 +34,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <Provider store={store}>
-        <div>
-          <NavbarItems />
+        <div suppressHydrationWarning>
+          <NavbarItems/>
         </div>
         <QueryClientProvider client={queryClient}>
       <ThemeProvider

@@ -18,7 +18,7 @@ const modalVariants = {
   },
 };
 
-function ProductModal() {
+function ProductModalWindow() {
   const dispatch = useDispatch<AppDispatch>();
   const { isOpen, selectedProduct } = useSelector(
     (state: RootState) => state.productModal
@@ -113,4 +113,4 @@ function ProductModal() {
   );
 }
 
-export default ProductModal;
+export default ProductModalWindow;

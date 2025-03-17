@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { productFilterReducer } from './sortSlice'
 import { ProductModalReducer } from './modalSlice'
+import {  authSliceReducer } from './authSlice'
 
 
 
 export const store = configureStore({
     reducer: {
         productFilters: productFilterReducer,
-        productModal:ProductModalReducer
+        productModal:ProductModalReducer,
+        authSlice:authSliceReducer
 
     },
 })

@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { removeCart, updateProductQuantity } from "@/store/modalSlice";
 import { Product } from "@/type";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function CartList() {
   const cart = useSelector((state: RootState) => state.productModal.cart);
   const dispatch = useDispatch<AppDispatch>();
+  const router =useRouter()
   const totalPrice = cart
     .reduce((sum, product) => sum + product.price * (product.quantity ?? 1), 0)
     .toFixed(2);
@@ -23,6 +25,10 @@ export default function CartList() {
         updateProductQuantity({ productId: id, newQuantity: quantity - 1 })
       );
   };
+
+  const handleLoginClick=()=>{
+    router.push("/account/signIn")
+  }
 
   return (
     <div className="container mx-auto p-4 md:grid md:grid-cols-12 md:gap-4">
@@ -89,7 +95,7 @@ export default function CartList() {
         <p className="text-gray-900">Total items: {cart.length}</p>
         <p className="text-gray-900 pb-2 border-b">Delivery: <span className="text-green-600">Free</span></p>
         <p className="text-gray-800 text-2xl font-bold">Subtotal : ${totalPrice}</p>
-        <button className="text-white p-2 bg-gray-700 hover:bg-gray-800 rounded-xl px-4 mt-4 cursor-pointer">procced to pay</button>
+        <button className="text-white p-2 bg-gray-700 hover:bg-gray-800 rounded-xl px-4 mt-4 cursor-pointer" onClick={handleLoginClick}>procced to pay</button>
       </div>
     </div>
   );
