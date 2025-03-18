@@ -6,7 +6,7 @@ interface AuthState{
     password:string;
     isLogin:boolean;
     error:string;
-    isAuthenticated: boolean, 
+    isLoading: boolean, 
     user: User|null, 
 }
 
@@ -15,7 +15,7 @@ const initialState:AuthState={
     password:'',
     isLogin:true,
     error:'',
-    isAuthenticated: false, // اضافه شده برای ذخیره وضعیت ورود
+    isLoading:false,
     user: null, // اضافه شده برای ذخیره اطلاعات کاربر
 }
 
@@ -32,19 +32,17 @@ export const authSlice=createSlice({
         setError(state,action:PayloadAction<string>){
             state.error=action.payload
         },
-        toggleIsLogin(state){
-            state.isLogin=!state.isLogin
+        setIsLogin(state,action:PayloadAction<boolean>){
+            state.isLogin=action.payload
         },
-        setUser: (state, action) => {
-            state.user = action.payload;
-            state.isAuthenticated = true;
+        setIsLoading: (state, action:PayloadAction<boolean>) => {
+            state.isLoading = action.payload;
           },
           clearUser: (state) => {
             state.user = null;
-            state.isAuthenticated = false;
           },
     }
 })
 
-export const {setEmail,setPassword,setError,toggleIsLogin,setUser, clearUser}= authSlice.actions
+export const {setEmail,setPassword,setError,setIsLogin,setIsLoading, clearUser}= authSlice.actions
 export const authSliceReducer=authSlice.reducer

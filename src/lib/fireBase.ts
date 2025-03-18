@@ -17,9 +17,15 @@ let app;
 try {
   app = initializeApp(firebaseConfig);
   console.log("Firebase App initialized:", app.name);
-} catch (error) {
-  console.error("Error initializing Firebase:", error);
+} catch (error: unknown) {
+  if (error instanceof Error) {
+    console.error("Register Error:", error.message);
+  } else {
+    console.error("An unknown error occurred");
+  }
+  throw error
 }
+
 
 export const auth = getAuth(app);
 
@@ -28,8 +34,12 @@ export const registerUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     console.log("User registered:", userCredential.user);
     return userCredential;
-  } catch (error: any) {
-    console.error("Register Error:", error.code, error.message);
+  } catch (error: unknown) {
+    if(error instanceof Error){
+      console.error("Register Error:", error.message);
+    }else{
+      console.log("An unknow error occured")
+    }
     throw error;
   }
 };
@@ -39,8 +49,12 @@ export const loginUser = async (email: string, password: string) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User logged in:", userCredential.user);
     return userCredential;
-  } catch (error: any) {
-    console.error("Login Error:", error.code, error.message);
+  } catch (error: unknown) {
+    if(error instanceof Error){
+      console.log("Login Error",error.message)
+    }else{
+      console.log("An unknow error occured")
+    }
     throw error;
   }
 };
