@@ -9,7 +9,12 @@ import { auth } from "@/lib/fireBase";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { AppDispatch, RootState } from "@/store/store";
-import { setEmail,setIsLoading,setIsLogin,setPassword } from "@/store/authSlice";//تابع رو اینمپورت میکنیم
+import {
+  setEmail,
+  setIsLoading,
+  setIsLogin,
+  setPassword,
+} from "@/store/authSlice"; //تابع رو اینمپورت میکنیم
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -18,8 +23,10 @@ const AuthForm = () => {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [isLoading, setIsLoading] = useState(false); // حالت لودینگ
-  const dispatch=useDispatch<AppDispatch>()
-  const {email,isLoading,isLogin,password}=useSelector((state:RootState)=>state.authSlice)//استیت تابع رو تو متغفیر دیاسراکت کردیم
+  const dispatch = useDispatch<AppDispatch>();
+  const { email, isLoading, isLogin, password } = useSelector(
+    (state: RootState) => state.authSlice
+  ); //استیت تابع رو تو متغفیر دیاسراکت کردیم
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -53,37 +60,45 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[50vh] justify-center items-center">
-      <h1 className="text-2xl mb-3">{isLogin ? "SignIn Page" : "Register"}</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="border p-1 rounded-2xl m-2"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => dispatch(setEmail(e.target.value))}
-        />
-        <input
-          className="border p-1 rounded-2xl m-2"
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => dispatch(setPassword(e.target.value))}
-        />
-        <Button
-          disabled={isLoading} // دکمه فقط موقع لودینگ غیرفعال می‌شه
-          className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center"
-          type="submit"
-        >
-          {isLoading ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <>{isLogin ? "ورود" : "ثبت‌نام"}</>
-          )}
-        </Button>
-      </form>
-      <button onClick={() => dispatch(setIsLogin(!isLogin))}>
-        {isLogin ? "به ثبت‌نام بروید" : "به ورود بروید"}
+    <div className=" absolute left-1/2 top-1/2 flex flex-col items-center justify-center w-[300px] h-[400] border shadow-md rounded-2xl  -translate-x-1/2 -translate-y-1/2 ">
+      <div className=" flex ">
+        <h1 className="text-2xl mb-3 font-mono">
+          {isLogin ? "ALREADY REGISTERD?" : "Register"}
+        </h1>
+      </div>
+      <div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            className="border p-1 rounded-2xl m-2"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => dispatch(setEmail(e.target.value))}
+          />
+          <input
+            className="border p-1 rounded-2xl m-2"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => dispatch(setPassword(e.target.value))}
+          />
+          <Button
+            disabled={isLoading} // دکمه فقط موقع لودینگ غیرفعال می‌شه
+            className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center font-mono hover:bg-gray-500 cursor-pointer"
+            type="submit"
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <>{isLogin ? "LOG IN" : "REGISTER"}</>
+            )}
+          </Button>
+        </form>
+      </div>
+      <button 
+      className=" flex mt-2 font-mono cursor-pointer hover:text-blue-500 "
+      onClick={() => dispatch(setIsLogin(!isLogin))}>
+        {isLogin ? " GO TO REGISTER" : "به ورود بروید"}
       </button>
 
       {!isLogin && (
