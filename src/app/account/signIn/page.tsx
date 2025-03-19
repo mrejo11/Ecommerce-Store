@@ -14,7 +14,7 @@ import {
   setIsLoading,
   setIsLogin,
   setPassword,
-} from "@/store/authSlice"; //تابع رو اینمپورت میکنیم
+} from "@/store/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -31,41 +31,40 @@ const AuthForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(setIsLoading(true)); // شروع لودینگ قبل از درخواست
+    dispatch(setIsLoading(true)); 
 
     if (isLogin) {
-      // درخواست ورود
+      // login request
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("ورود موفق:", user.email);
-          router.push("/account/signIn/shipping"); // هدایت به صفحه شیپینگ
+          console.log("success", user.email);
+          router.push("/account/signIn/shipping"); // go to shipping page
         })
         .catch((error) => {
-          console.log("خطا در ورود:", error.message);
+          console.log("failed login", error.message);
         })
-        .finally(() => dispatch(setIsLoading(false))); // پایان لودینگ
+        .finally(() => dispatch(setIsLoading(false))); 
     } else {
-      // درخواست ثبت‌نام
+      // create request
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("ثبت‌نام موفق:", user.email);
+          console.log("success Login", user.email);
         })
         .catch((error) => {
-          console.log("خطا در ثبت‌نام:", error.message);
+          console.log("faild to register", error.message);
         })
-        .finally(() => dispatch(setIsLoading(false))); // پایان لودینگ
+        .finally(() => dispatch(setIsLoading(false))); 
     }
   };
 
   return (
-    <div className=" absolute left-1/2 top-1/2 flex flex-col items-center justify-center w-[300px] h-[400] border shadow-md rounded-2xl  -translate-x-1/2 -translate-y-1/2 ">
-      <div className=" flex ">
+    <div className="max-h-screen flex items-center justify-center">
+      <div className=" flex flex-col items-center justify-center w-[300px] h-[400px] border shadow-md rounded-2xl translate-y-10 md:translate-y-28">
         <h1 className="text-2xl mb-3 font-mono">
           {isLogin ? "ALREADY REGISTERD?" : "Register"}
         </h1>
-      </div>
       <div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -74,19 +73,19 @@ const AuthForm = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => dispatch(setEmail(e.target.value))}
-          />
+            />
           <input
             className="border p-1 rounded-2xl m-2"
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => dispatch(setPassword(e.target.value))}
-          />
+            />
           <Button
-            disabled={isLoading} // دکمه فقط موقع لودینگ غیرفعال می‌شه
+            disabled={isLoading} 
             className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center font-mono hover:bg-gray-500 cursor-pointer"
             type="submit"
-          >
+            >
             {isLoading ? (
               <Loader2 className="animate-spin" />
             ) : (
@@ -98,14 +97,9 @@ const AuthForm = () => {
       <button 
       className=" flex mt-2 font-mono cursor-pointer hover:text-blue-500 "
       onClick={() => dispatch(setIsLogin(!isLogin))}>
-        {isLogin ? " GO TO REGISTER" : "به ورود بروید"}
+        {isLogin ? " GO TO REGISTER" : " Go TO LOGIN"}
       </button>
-
-      {!isLogin && (
-        <p>
-          اگر عضو هستید، <a href="/login">اینجا کلیک کنید</a> برای ورود
-        </p>
-      )}
+        </div>
     </div>
   );
 };

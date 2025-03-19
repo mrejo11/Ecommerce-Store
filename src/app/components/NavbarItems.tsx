@@ -9,15 +9,28 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { setCurrentPage } from "@/store/sortSlice";
 import { useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/lib/fireBase";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useRouter } from "next/navigation";
+import { setIsLogin } from "@/store/authSlice";
+
+
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   //add number of items on shopping icon for show any items to shopping basket
-  const cart=useSelector((state:RootState)=>state.productModal.cart)
+  const cart = useSelector((state: RootState) => state.productModal.cart);
+  useSelector((state: RootState) => state.authSlice);
   const searchRef = useRef<HTMLDivElement | null>(null); //margah baraye input
-
   const dispatch = useDispatch<AppDispatch>();
 
+  const router=useRouter()
   const handleHeaderClick = () => {
     dispatch(setCurrentPage(1));
   };
@@ -46,7 +59,6 @@ export default function NavbarItems() {
         setIsSearchActive(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -54,16 +66,41 @@ export default function NavbarItems() {
     };
   }, [isSearchActive]);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+    // تابع لاگ‌اوت
+    const handleSignOut = () => {
+      signOut(auth)
+        .then(() => {
+          dispatch(setIsLogin(false))
+          router.push("/"); 
+          alert("success logout"); 
+        })
+        .catch((error) => {
+          console.error("Error on exit", error.message); 
+        });
+    };
+  
+
   return (
     <>
-      <nav className="container mx-auto flex justify-center w-full gap-6 py-2 ">
+      <nav className="container mx-auto flex justify-center w-full gap-6 py-2">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           {/* menu */}
-          <div className=" bg-gradient-to-r from-teal-500 to-indigo-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl ">
+          <div className=" bg-gradient-to-r from-teal-500 to-indigo-500 backdrop-sepia  flex flex-col w-72 md:w-auto md:flex-row gap-4 md:gap-7 p-2 rounded-2xl">
             <div className="flex items-center ">
               <div onClick={() => setIsOpen(!isOpen)}>
                 <Menu className="md:hidden" />
@@ -163,18 +200,37 @@ export default function NavbarItems() {
                   )}
                 </div>
                 <div className="hidden md:block">
-                  <Link href="/account/signIn">
+                  {isLoggedIn?
+                  
+                  <Popover>
+                  <PopoverTrigger>
                     <UserRound color="#000" />
-                  </Link>
+                    {isLoggedIn && (
+                      <span
+                        className="absolute top-2 right-9 bg-green-500 text-white text-xs rounded-full h-2 w-2 flex items-center justify-center"
+                        suppressHydrationWarning
+                      ></span>
+                    )}
+                  </PopoverTrigger>
+                  <PopoverContent className="w-32">
+                    <div >
+                      <Button type="submit" onClick={handleSignOut}>Sign Out</Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+                  
+                  : <Link href={"/account/signIn"}> <UserRound color="#000" /></Link>}
+                
                 </div>
 
                 <div>
                   <Link href="/Cart">
                     <ShoppingCart color="#000" />
-                    {cart.length >0 && (
-                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
-                        suppressHydrationWarning 
-                        >
+                    {cart.length > 0 && (
+                      <span
+                        className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                        suppressHydrationWarning
+                      >
                         {cart.length}
                       </span>
                     )}
@@ -188,3 +244,5 @@ export default function NavbarItems() {
     </>
   );
 }
+
+//just alert

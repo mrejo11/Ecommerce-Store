@@ -1,12 +1,13 @@
 'use client'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "./providers/theme-provider";
 import NavbarItems from "./components/NavbarItems";
 import { QueryClient,QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store, persistor } from "@/store/store"; // persistor رو اینجا وارد کن
 
 
 
@@ -28,26 +29,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-        <div suppressHydrationWarning>
-          <NavbarItems/>
-        </div>
-        <QueryClientProvider client={queryClient}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem={false}
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
-    </QueryClientProvider>
-    </Provider>
+          <PersistGate loading={<div>در حال بارگذاری...</div>} persistor={persistor}>
+            <div suppressHydrationWarning>
+              <NavbarItems />
+            </div>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem={false}
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </QueryClientProvider>
+          </PersistGate>
+        </Provider>
       </body>
     </html>
   );

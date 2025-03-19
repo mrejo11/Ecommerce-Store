@@ -8,7 +8,10 @@ import Image from "next/image";
 
 export default function CartList() {
   const cart = useSelector((state: RootState) => state.productModal.cart);
-  const dispatch = useDispatch<AppDispatch>();
+    // catch isLogin from authSlice
+    const isLogin = useSelector((state: RootState) => state.authSlice.isLogin);
+   console.log("isLogin in CartList:", isLogin); // چک کن
+    const dispatch = useDispatch<AppDispatch>();
   const router =useRouter()
   const totalPrice = cart
     .reduce((sum, product) => sum + product.price * (product.quantity ?? 1), 0)
@@ -26,8 +29,15 @@ export default function CartList() {
       );
   };
 
+  //if user stay in login then go to directly payment
   const handleLoginClick=()=>{
-    router.push("/account/signIn")
+    console.log("islogin",isLogin)
+    if(isLogin){
+      router.push("/payment")
+    }else{
+
+      router.push("/account/signIn")
+    }
   }
 
   return (

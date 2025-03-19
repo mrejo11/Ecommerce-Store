@@ -1,20 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { productFilterReducer } from './sortSlice'
-import { ProductModalReducer } from './modalSlice'
-import {  authSliceReducer } from './authSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist"; // persistStore رو اینجا اضافه کن
+import storage from "redux-persist/lib/storage"; // پیش‌فرض localStorage
+import { productFilterReducer } from "./sortSlice";
+import { ProductModalReducer } from "./modalSlice";
+import { authSliceReducer } from "./authSlice";
 
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
+const persistedReducer = persistReducer(persistConfig, authSliceReducer);
 
 export const store = configureStore({
-    reducer: {
-        productFilters: productFilterReducer,
-        productModal:ProductModalReducer,
-        authSlice:authSliceReducer
+  reducer: {
+    productFilters: productFilterReducer,
+    productModal: ProductModalReducer,
+    authSlice: persistedReducer,
+  },
+});
 
-    },
-})
+export const persistor = persistStore(store); // اینجا persistStore استفاده شده
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+// تایپ‌ها
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

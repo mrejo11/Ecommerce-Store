@@ -1,5 +1,4 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
-import { User } from 'firebase/auth'; // اضافه کردن نوع User از Firebase
 
 interface AuthState{
     email:string;
@@ -7,7 +6,6 @@ interface AuthState{
     isLogin:boolean;
     error:string;
     isLoading: boolean, 
-    user: User|null, 
 }
 
 const initialState:AuthState={
@@ -16,7 +14,6 @@ const initialState:AuthState={
     isLogin:true,
     error:'',
     isLoading:false,
-    user: null, // اضافه شده برای ذخیره اطلاعات کاربر
 }
 
 export const authSlice=createSlice({
@@ -37,12 +34,10 @@ export const authSlice=createSlice({
         },
         setIsLoading: (state, action:PayloadAction<boolean>) => {
             state.isLoading = action.payload;
-          },
-          clearUser: (state) => {
-            state.user = null;
-          },
-    }
+         },
+         }
+       
 })
 
-export const {setEmail,setPassword,setError,setIsLogin,setIsLoading, clearUser}= authSlice.actions
+export const {setEmail,setPassword,setError,setIsLogin,setIsLoading}= authSlice.actions
 export const authSliceReducer=authSlice.reducer
