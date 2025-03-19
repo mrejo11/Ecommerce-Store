@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
-import { setIsLogin } from "@/store/authSlice";
+import { resetAuth } from "@/store/authSlice";
 
 
 export default function NavbarItems() {
@@ -81,7 +81,7 @@ export default function NavbarItems() {
     const handleSignOut = () => {
       signOut(auth)
         .then(() => {
-          dispatch(setIsLogin(false))
+          dispatch(resetAuth())
           router.push("/"); 
           alert("success logout"); 
         })

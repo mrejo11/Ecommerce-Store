@@ -6,14 +6,16 @@ interface AuthState{
     isLogin:boolean;
     error:string;
     isLoading: boolean, 
+    user:null
 }
 
 const initialState:AuthState={
     email:'',
     password:'',
-    isLogin:true,
+    isLogin:false,
     error:'',
     isLoading:false,
+    user:null
 }
 
 export const authSlice=createSlice({
@@ -35,9 +37,16 @@ export const authSlice=createSlice({
         setIsLoading: (state, action:PayloadAction<boolean>) => {
             state.isLoading = action.payload;
          },
+         setUser: (state, action) => {
+            state.user = action.payload;
+          },
+          resetAuth(state) {
+            // return to initialstate
+            Object.assign(state, initialState);
+        }
          }
        
 })
 
-export const {setEmail,setPassword,setError,setIsLogin,setIsLoading}= authSlice.actions
+export const {setEmail,setPassword,setError,setIsLogin,setIsLoading,setUser,resetAuth}= authSlice.actions
 export const authSliceReducer=authSlice.reducer

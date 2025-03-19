@@ -1,15 +1,12 @@
 'use client'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "./providers/theme-provider";
 import NavbarItems from "./components/NavbarItems";
 import { QueryClient,QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Provider } from "react-redux";
-import { store, persistor } from "@/store/store"; // persistor رو اینجا وارد کن
-
-
+import { store } from "@/store/store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +33,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          <PersistGate loading={<div>در حال بارگذاری...</div>} persistor={persistor}>
             <div suppressHydrationWarning>
               <NavbarItems />
             </div>
@@ -50,7 +46,7 @@ export default function RootLayout({
                 {children}
               </ThemeProvider>
             </QueryClientProvider>
-          </PersistGate>
+        
         </Provider>
       </body>
     </html>

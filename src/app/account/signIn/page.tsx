@@ -31,7 +31,7 @@ const AuthForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(setIsLoading(true)); 
+    dispatch(setIsLoading(true));
 
     if (isLogin) {
       // login request
@@ -40,22 +40,25 @@ const AuthForm = () => {
           const user = userCredential.user;
           console.log("success", user.email);
           router.push("/account/signIn/shipping"); // go to shipping page
+          dispatch(setIsLogin(true))//user LOGIN
         })
         .catch((error) => {
           console.log("failed login", error.message);
         })
-        .finally(() => dispatch(setIsLoading(false))); 
+        .finally(() => dispatch(setIsLoading(false)));
     } else {
       // create request
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+          router.push("/")
           console.log("success Login", user.email);
+          dispatch(setIsLogin(true))//After registering, LOGIN.
         })
         .catch((error) => {
           console.log("faild to register", error.message);
         })
-        .finally(() => dispatch(setIsLoading(false))); 
+        .finally(() => dispatch(setIsLoading(false)));
     }
   };
 
@@ -65,41 +68,42 @@ const AuthForm = () => {
         <h1 className="text-2xl mb-3 font-mono">
           {isLogin ? "ALREADY REGISTERD?" : "Register"}
         </h1>
-      <div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            className="border p-1 rounded-2xl m-2"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => dispatch(setEmail(e.target.value))}
+        <div>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input
+              className="border p-1 rounded-2xl m-2"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => dispatch(setEmail(e.target.value))}
             />
-          <input
-            className="border p-1 rounded-2xl m-2"
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => dispatch(setPassword(e.target.value))}
+            <input
+              className="border p-1 rounded-2xl m-2"
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => dispatch(setPassword(e.target.value))}
             />
-          <Button
-            disabled={isLoading} 
-            className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center font-mono hover:bg-gray-500 cursor-pointer"
-            type="submit"
+            <Button
+              disabled={isLoading}
+              className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center font-mono hover:bg-gray-500 cursor-pointer"
+              type="submit"
             >
-            {isLoading ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              <>{isLogin ? "LOG IN" : "REGISTER"}</>
-            )}
-          </Button>
-        </form>
-      </div>
-      <button 
-      className=" flex mt-2 font-mono cursor-pointer hover:text-blue-500 "
-      onClick={() => dispatch(setIsLogin(!isLogin))}>
-        {isLogin ? " GO TO REGISTER" : " Go TO LOGIN"}
-      </button>
+              {isLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>{isLogin ? "LOG IN" : "REGISTER"}</>
+              )}
+            </Button>
+          </form>
         </div>
+        <button
+          className=" flex mt-2 font-mono cursor-pointer hover:text-blue-500 "
+          onClick={() => dispatch(setIsLogin(!isLogin))}
+        >
+          {isLogin ? " GO TO REGISTER" : " Go TO LOGIN"}
+        </button>
+      </div>
     </div>
   );
 };
