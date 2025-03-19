@@ -7,6 +7,7 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "@/lib/convertToSubcurrency";
+import { useRouter } from "next/navigation";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -14,6 +15,8 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const router=useRouter()
 
   useEffect(() => {
     fetch("/api/create-payment-intent", {
@@ -63,6 +66,10 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     setLoading(false);
   };
 
+  const handleClick=()=>{
+    router.push("/")
+  }
+
   if (!clientSecret || !stripe || !elements) {
     return (
       <div className="flex items-center justify-center">
@@ -89,6 +96,12 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
         className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
       >
         {!loading ? `Pay $${amount}` : "Processing..."}
+      </button>
+      <button
+        className="text-white w-full p-5 bg-red-400 mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
+        onClick={handleClick}
+      >
+        CANCEL
       </button>
     </form>
   );
