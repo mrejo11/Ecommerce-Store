@@ -5,23 +5,23 @@ import { removeCart, updateProductQuantity } from "@/store/modalSlice";
 import { Product } from "@/type";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useCartTotal } from "../hooks/useTotalCart";
 
 export default function CartList() {
   const cart = useSelector((state: RootState) => state.productModal.cart);
     // catch isLogin from authSlice
     const isLogin = useSelector((state: RootState) => state.authSlice.isLogin);
-   console.log("isLogin in CartList:", isLogin); // چک کن
+   console.log("isLogin in CartList:", isLogin); // 
     const dispatch = useDispatch<AppDispatch>();
   const router =useRouter()
-  const totalPrice = cart
-    .reduce((sum, product) => sum + product.price * (product.quantity ?? 1), 0)
-    .toFixed(2);
+  const totalPrice=useCartTotal()
 
   const handleRemoveCart = (product: Product) => dispatch(removeCart(product));
   const handleIncrement = (id: number, quantity: number) =>
     dispatch(
       updateProductQuantity({ productId: id, newQuantity: quantity + 1 })
     );
+    // 
   const handleDecrement = (id: number, quantity: number) => {
     if (quantity > 1)
       dispatch(

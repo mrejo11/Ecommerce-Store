@@ -8,7 +8,6 @@ import {
 } from "@stripe/react-stripe-js";
 import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import { useRouter } from "next/navigation";
-
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -86,6 +85,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   }
 
   return (
+    <div>
     <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
       {clientSecret && <PaymentElement />}
 
@@ -93,17 +93,18 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 
       <button
         disabled={!stripe || loading}
-        className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
+        className="text-white w-full p-5 bg-black hover:bg-gray-700 cursor-pointer mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
       >
         {!loading ? `Pay $${amount}` : "Processing..."}
       </button>
       <button
-        className="text-white w-full p-5 bg-red-400 mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
+        className="text-white w-full p-5 bg-red-500 hover:bg-red-600 cursor-pointer mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
         onClick={handleClick}
       >
         CANCEL
       </button>
     </form>
+    </div>
   );
 };
 
