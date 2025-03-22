@@ -1,6 +1,8 @@
-تک زون آنلاین شاپ
+تک زون 
 ##  مرورکلی
-یک وب اپلیکیشن تجارت الکترونیک به نام تگ زون که با نکست جی اس توسعه داده شده است که کاملا ریپانسیو توسعه تداده شده است از API فیک برای نمایش و فروش محصولات استفاده شده است 
+پروژه تگ زون یک وب اپلیکیشن تجارت الکترونیک است که با فریمورک Next.js توسعه داده شده است. این پروژه بر اساس مفهوم MVP (Minimum Viable Product) طراحی شده و فقط شامل ویژگی‌های اصلی برای نمایش و فروش و احراز هویت و هچنین صفحه پرداخت محصولات است. وب اپلیکیشن کاملاً ریسپانسیو بوده و روی دستگاه‌های مختلف مثل دسکتاپ، تبلت و موبایل به خوبی نمایش داده می‌شود. برای شبیه‌سازی داده‌های واقعی در طول توسعه، از یک API ساختگی استفاده شده است.
+
+
 
 ## ویژگی ها
 - برای گرفتن API محصولات از سایت https://fakestoreapi.in/ استفاده شده است
@@ -14,24 +16,13 @@
   
 
 
-## تکنولوژی‌های استفاده‌شده
-Next.js: فریمورک React برای تولید صفحات استاتیک (SSG) و رندر سمت سرور.
-TypeScript: افزایش ایمنی کد و نگه‌داری بهتر.
-Redux: مدیریت وضعیت.
-React Query: دریافت داده و کشینگ.
-Firebase: احراز هویت.
-Tailwind CSS: استایل‌دهی.
-Framer Motion: انیمیشن‌ها.
-Shadcn: کامپوننت‌های رابط کاربری قابل استفاده مجدد.
-Fake Store API: داده‌های تستی برای محصولات.
-
 ## پیش نیاز های نصب
 - Node.js (v16 or higher)
 - npm or yarn
 - Firebase account (for authentication setup)
 
 ##نصب و راه‌اندازی
-1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-username/online-audio-visual-shop.git
    ```
@@ -58,13 +49,13 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
--اه‌اندازی سرور توسعه
+##اه‌اندازی سرور توسعه
 ```bash
 npm run dev
 # or
 yarn dev
 ```
-باز کردن پروژه در مرورگر
+## باز کردن پروژه در مرورگر
 ```bash
 http://localhost:3000
 ```
