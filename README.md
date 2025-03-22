@@ -33,7 +33,7 @@
 نصب و راه‌اندازی
 
    ```bash
-   git clone [https://github.com/your-username/online-audio-visual-shop.git](https://github.com/mrejo11/Ecommerce-Store.git)
+   git clone https://github.com/your-username/online-audio-visual-shop.git](https://github.com/mrejo11/Ecommerce-Store.git
    ```
    
 برای رفتن به دایرکتوری پروژه، از دستور زیر در ترمینال استفاده کنید:
@@ -71,8 +71,8 @@ http://localhost:3000
 ```
 
 ## نسخه دمو
-Live demo: [https://techzone-re.netlify.app/)
-نکته: به دلیل فیلترینگ یا تحریم‌ها، برای نمایش بهتر تصاویر توصیه می‌شود از VPN استفاده کنید.
+Live demo: https://techzone-re.netlify.app
+-نکته: به دلیل فیلترینگ یا تحریم‌ها، برای نمایش بهتر تصاویر توصیه می‌شود از VPN استفاده کنید.
 
 
 
