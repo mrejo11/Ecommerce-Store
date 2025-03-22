@@ -25,7 +25,7 @@
   
 
 
- پیش نیاز های نصب
+ ## پیش نیاز های نصب
 - Node.js (v16 or higher)
 - npm or yarn
 - Firebase account (for authentication setup)
@@ -70,9 +70,13 @@ yarn dev
 http://localhost:3000
 ```
 
-## نسخه دمو
-Live demo: https://techzone-re.netlify.app
--نکته: به دلیل فیلترینگ یا تحریم‌ها، برای نمایش بهتر تصاویر توصیه می‌شود از VPN استفاده کنید.
+## نسخه دمو  
+
+Live demo: [https://techzone-re.netlify.app](https://techzone-re.netlify.app)  
+
+- نکته:  
+  به دلیل فیلترینگ یا تحریم‌ها، برای نمایش بهتر تصاویر توصیه می‌شود از VPN استفاده کنید.  
+
 
 
 
