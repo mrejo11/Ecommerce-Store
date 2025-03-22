@@ -84,7 +84,11 @@ Live demo: [https://techzone-re.netlify.app](https://techzone-re.netlify.app)
 - نکته:  
   به دلیل فیلترینگ یا تحریم‌ها، برای نمایش بهتر تصاویر توصیه می‌شود از VPN استفاده کنید.
 
-  ## TechZone Online Store 🛒
+
+
+  
+
+## TechZone Online Store 🛒
 
 TechZone is an e-commerce web application developed with the Next.js framework. This project is designed based on the MVP (Minimum Viable Product) concept and includes only the essential features for product display, sales, authentication, and payment processing. The web application is fully responsive, ensuring a seamless experience on desktops, tablets, and mobile devices. A fake API is used during development to simulate real data.
 
