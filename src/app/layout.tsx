@@ -33,10 +33,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
             <div suppressHydrationWarning>
               <NavbarItems />
             </div>
-            <QueryClientProvider client={queryClient}>
               <ThemeProvider
                 attribute="class"
                 defaultTheme="system"

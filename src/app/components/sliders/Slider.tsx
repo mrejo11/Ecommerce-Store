@@ -49,18 +49,17 @@ function ResponsiveSlider() {
     prevArrow: <SamplePrevArrow />,
     initialSlide: 0,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3, infinite: true, dots: true } },
+      { breakpoint: 1024, settings: { slidesToShow: 1, slidesToScroll: 1, infinite: true, dots: true } },
       { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2, initialSlide: 2 } },
       { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-    ]
+    ],
   };
 
   return (
-    
-    <div className="w-full max-w-[1200px] mx-auto mt-2">
+    <div className="w-full max-w-[1200px] mx-auto mt-2 relative z-0">
       <Slider {...settings}>
         <div className="relative w-full h-[300px]">
-          <Image src="/big-sale-discounts-products_23-2150336669.avif" alt="slider" fill  />
+          <Image src="/big-sale-discounts-products_23-2150336669.avif" alt="slider" fill />
         </div>
         <div className="relative w-full h-[300px]">
           <Image src="/black-friday-super-sale-web-banner-template_120329-2158.avif" alt="slider" fill />
@@ -73,8 +72,6 @@ function ResponsiveSlider() {
         </div>
       </Slider>
     </div>
-   
-  )
+  );
 }
-
 export default ResponsiveSlider;

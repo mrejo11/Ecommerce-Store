@@ -13,6 +13,7 @@ import Pagination from "./Pagination";
 import { openModal } from "@/store/modalSlice";
 import { Product } from "@/type";
 import ProductModalWindow from "./ProductModalWindow";
+import SearchBar from "./SearchBar";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -102,7 +103,7 @@ function ProductList() {
   // Render
   return (
     <div className="container mt-6 mx-auto gap-4 mb-4">
-      <h1 className="mb-4 text-2xl font-bold bg-amber-400">Sorted By</h1>
+      <h1 className="mb-4 text-2xl font-bold bg-gary-400"><SearchBar /></h1>
       <div className="flex gap-2">
         <span
           className={`${
