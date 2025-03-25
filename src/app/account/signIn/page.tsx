@@ -17,8 +17,11 @@ import {
 } from "@/store/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const AuthForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+
   // const [isLogin, setIsLogin] = useState(true); // حالت ورود یا ثبت‌نام
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -32,6 +35,7 @@ const AuthForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(setIsLoading(true));
+    setErrorMessage("");
 
     if (isLogin) {
       // login request
@@ -40,10 +44,14 @@ const AuthForm = () => {
           const user = userCredential.user;
           console.log("success", user.email);
           router.push("/account/signIn/shipping"); // go to shipping page
-          dispatch(setIsLogin(true))//user LOGIN
+          dispatch(setIsLogin(true)); //user LOGIN
         })
         .catch((error) => {
-          console.log("failed login", error.message);
+          if (error.code === "auth/invalid-credential") {
+            setErrorMessage("The email or password you entered is incorrect");
+          } else {
+            setErrorMessage(error.message);
+          }
         })
         .finally(() => dispatch(setIsLoading(false)));
     } else {
@@ -51,12 +59,18 @@ const AuthForm = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          router.push("/")
+          router.push("/");
           console.log("success Login", user.email);
-          dispatch(setIsLogin(true))//After registering, LOGIN.
+          dispatch(setIsLogin(true)); //After registering, LOGIN.
         })
         .catch((error) => {
-          console.log("faild to register", error.message);
+          if (error.code==="auth/email-already-in-use") {
+            setErrorMessage("this email is already used")
+          }else if(error.code === "auth/weak-password"){
+            setErrorMessage("password atleast must be 6 character")
+          }else{
+            setErrorMessage(error.message);
+          }
         })
         .finally(() => dispatch(setIsLoading(false)));
     }
@@ -84,6 +98,9 @@ const AuthForm = () => {
               value={password}
               onChange={(e) => dispatch(setPassword(e.target.value))}
             />
+            {errorMessage && (
+              <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+            )}
             <Button
               disabled={isLoading}
               className="bg-gray-800 p-2 text-2xl text-white rounded-full flex items-center justify-center font-mono hover:bg-gray-500 cursor-pointer"
