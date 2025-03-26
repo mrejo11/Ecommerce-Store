@@ -9,21 +9,17 @@ import { openModal } from "@/store/modalSlice";
 import { AppDispatch } from "@/store/store";
 import { Product } from "@/type";
 
-
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState(""); // save input change
   const [isOpen, setIsOpen] = useState(false); // for open and close menu
 
-   const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-
-      // handle click on product
-    const handleProductClick = (product: Product) => {
-      dispatch(openModal(product));  //show open modal window
-      setIsOpen(false);
-    };
-
-
+  // handle click on product
+  const handleProductClick = (product: Product) => {
+    dispatch(openModal(product)); //show open modal window
+    setIsOpen(false);
+  };
 
   //fetch Data with usequery
   const {
@@ -40,8 +36,7 @@ export default function SearchBar() {
   const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setIsOpen(true); // menue is open
-    if(e.target.value.length===0)
-        setIsOpen(false)
+    if (e.target.value.length === 0) setIsOpen(false);
   };
   //producy fillter base on search term
   const filterProduct = products?.filter((product) =>
@@ -79,7 +74,7 @@ export default function SearchBar() {
             <div
               key={product.id}
               className="p-2 hover:bg-gray-100 cursor-pointer"
-              onClick={()=>handleProductClick(product)}
+              onClick={() => handleProductClick(product)}
             >
               <div className="flex items-center">
                 <Image
@@ -96,13 +91,6 @@ export default function SearchBar() {
               </div>
             </div>
           ))}
-        </div>
-      )}
-
-      {/* message when product not found */}
-      {isOpen && filterProduct?.length === 0 && searchTerm && (
-        <div className="absolute z-20 w-full bg-white border rounded-md shadow-lg p-2 mt-1">
-          <p className="text-gray-500">product not found</p>
         </div>
       )}
     </div>
