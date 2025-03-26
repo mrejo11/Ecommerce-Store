@@ -15,7 +15,7 @@ export interface ShowProduct {
 export default async function getProduct(): Promise<ShowProduct[] | undefined> {
   try {
     const res = await fetch("https://fakestoreapi.in/api/products?limit=150", {
-      cache:"no-store"
+      cache:"force-cache"
     });
     if (!res.ok) throw new Error("fail data fetch");
     const data = await res.json();
