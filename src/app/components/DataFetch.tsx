@@ -1,9 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
-import { Skeleton } from "@/components/ui/skeleton";
-import getProduct from "../actions";
+
 import Image from "next/image";
 // import { Button } from "@/components/ui/button";
 import { setSort, setCurrentPage } from "@/store/sortSlice";
@@ -14,8 +12,13 @@ import { openModal } from "@/store/modalSlice";
 import { Product } from "@/type";
 import ProductModalWindow from "./ProductModalWindow";
 import SearchBar from "./SearchBar";
+import { ShowProduct } from "../actions";
 
-function ProductList() {
+interface ProductListProps {
+  products: ShowProduct[];
+}
+
+export default function ProductList({products}:ProductListProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { sortField, sortOrder, currentPage } = useSelector(
     (state: RootState) => state.productFilters
@@ -30,16 +33,7 @@ function ProductList() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
-  // Fetch data with useQuery
-  const {
-    data: products,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: getProduct,
-    staleTime: 86400 * 1000,
-  });
+  
 
   // Sort handler with page reset
   const handleSort = (field: SortField) => {
@@ -81,24 +75,6 @@ function ProductList() {
   const handleNext = () => {
     if (currentPage < totalPage) dispatch(setCurrentPage(currentPage + 1));
   };
-
-  // Loading state
-  if (isLoading)
-    return (
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-14">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="flex flex-col items-center space-y-4">
-            <Skeleton className="h-[200px] w-[250px] rounded-xl" />
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-
-  if (error) return <div>Error for Loading Product</div>;
 
   // Render
   return (
@@ -177,6 +153,4 @@ function ProductList() {
   );
 }
 
-export default function HomePage() {
-  return <ProductList />;
-}
+

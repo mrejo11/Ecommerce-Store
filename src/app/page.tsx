@@ -1,14 +1,21 @@
-import HomePage from "./components/DataFetch";
 import Footer from "./components/Footer";
+import ProductList from "./components/DataFetch";
 import LandingPage from "./components/LandingPage";
 import { Github } from "lucide-react";
 // import { ModeToggle } from "./toggleMode"
-export default function Home() {
+import getProduct from "./actions";
+
+
+export default async function Home() {
+
+    const products =await getProduct();
+    console.log("Products in HomePage:", products);
+
   return (
-    <div >
+    <div>
      
       <LandingPage />
-      <HomePage />
+      <ProductList products={products || []} />
       <Footer />
       <div className="flex justify-center bg-gray-200 text-xs py-2">
         copyright ©2025 techzone-re.netlify.app <span className="font-bold ml-2">Source CodeIn</span>

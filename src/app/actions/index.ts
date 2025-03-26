@@ -1,4 +1,4 @@
-interface ShowProduct {
+export interface ShowProduct {
   id: number;
   title: string;
   price: number;
@@ -14,9 +14,12 @@ interface ShowProduct {
 //data Fetch
 export default async function getProduct(): Promise<ShowProduct[] | undefined> {
   try {
-    const res = await fetch("https://fakestoreapi.in/api/products?limit=150", {});
+    const res = await fetch("https://fakestoreapi.in/api/products?limit=150", {
+      cache:"force-cache"
+    });
     if (!res.ok) throw new Error("fail data fetch");
     const data = await res.json();
+    console.log(data)
     return data.products;
   } catch (error) {
     console.error("Error fetching:", error);
