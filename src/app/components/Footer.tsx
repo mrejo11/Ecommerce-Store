@@ -24,7 +24,7 @@ function Footer() {
       {/* Newsletter title */}
       {!isSubscribe ? (
         <>
-          <h1 className="text-xl font-mono mb-4">
+          <h1 className="text-xl font-mono mb-4 ml-2">
             Join our newsletter for trends, pre-shopping, and more
           </h1>
           {/* Email input field */}
@@ -45,7 +45,7 @@ function Footer() {
           >
             <div className="text-xs flex flex-col items-center">
               {/* Consent text with radio button */}
-              <p className="mb-4">
+              <p className="mb-4 mx-2">
                 <input
                   type="radio"
                   className={`w-2 h-2 appearance-none border border-black ${

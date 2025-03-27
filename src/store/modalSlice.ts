@@ -59,6 +59,7 @@ export const ProductModalsSlice = createSlice({
         },
         updateProductQuantity(state, action: PayloadAction<{ productId: number; newQuantity: number }>) {
             const { productId, newQuantity } = action.payload;
+            console.log(action.payload)
             const product = state.cart.find((item) => item.id === productId);
             if (product) {
               product.quantity = newQuantity;

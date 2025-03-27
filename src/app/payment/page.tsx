@@ -31,7 +31,7 @@ export default function HomePayment(){
   useEffect(()=>{
 
     if(isLogin===false){
-      router.push("/")
+      router.replace("/")
     }
   },[isLogin,router])
 

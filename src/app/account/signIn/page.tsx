@@ -22,10 +22,6 @@ import { useState } from "react";
 const AuthForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
-  // const [isLogin, setIsLogin] = useState(true); // حالت ورود یا ثبت‌نام
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [isLoading, setIsLoading] = useState(false); // حالت لودینگ
   const dispatch = useDispatch<AppDispatch>();
   const { email, isLoading, isLogin, password } = useSelector(
     (state: RootState) => state.authSlice
@@ -37,13 +33,15 @@ const AuthForm = () => {
     dispatch(setIsLoading(true));
     setErrorMessage("");
 
+
+  
     if (isLogin) {
       // login request
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
           console.log("success", user.email);
-          router.push("/account/signIn/shipping"); // go to shipping page
+          router.push("/account/signIn/shipping");// go to shipping page
           dispatch(setIsLogin(true)); //user LOGIN
         })
         .catch((error) => {
@@ -64,11 +62,11 @@ const AuthForm = () => {
           dispatch(setIsLogin(true)); //After registering, LOGIN.
         })
         .catch((error) => {
-          if (error.code==="auth/email-already-in-use") {
-            setErrorMessage("this email is already used")
-          }else if(error.code === "auth/weak-password"){
-            setErrorMessage("password atleast must be 6 character")
-          }else{
+          if (error.code === "auth/email-already-in-use") {
+            setErrorMessage("this email is already used");
+          } else if (error.code === "auth/weak-password") {
+            setErrorMessage("password atleast must be 6 character");
+          } else {
             setErrorMessage(error.message);
           }
         })

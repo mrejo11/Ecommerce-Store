@@ -12,10 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import PopUp from "@/app/components/PopUp";
 
 export default function ShippingPage() {
   const [isTextarea, setIsTextarea] = useState(false);
   const [address, setAddress] = useState("");
+  const [showPopUp, setShowPopUp] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const handleClick = () => {
     setIsTextarea(true);
@@ -26,6 +28,13 @@ export default function ShippingPage() {
   ) => {
     setAddress(e.target.value);
   };
+
+  // show pop up
+  useEffect(() => {
+    setShowPopUp(true);
+    const timer = setTimeout(() => setShowPopUp(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // check aya click khareg as safeh shode
   useEffect(() => {
@@ -51,6 +60,8 @@ export default function ShippingPage() {
 
   return (
     <div className="h-screen flex items-center justify-center">
+      <PopUp showPopUp={showPopUp} message="Succssefully Logged In" />
+
       <div className="grid grid-cols-2 gap-4 w-full max-w-2xl h-auto border p-4 rounded-2xl shadow">
         <div className="col-span-2">
           <h1 className="text-2xl font-bold font-mono">SHIPPING ADDRESS</h1>
