@@ -18,14 +18,15 @@ import {
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import PopUp from "@/app/components/PopUp";
 
 const AuthForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [showPopUp, setShowPopUp] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { email, isLoading, isLogin, password } = useSelector(
     (state: RootState) => state.authSlice
-  ); //استیت تابع رو تو متغفیر دیاسراکت کردیم
+  );
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,10 +40,11 @@ const AuthForm = () => {
       // login request
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          dispatch(setIsLogin(true)); //user LOGIN
           const user = userCredential.user;
           console.log("success", user.email);
-          router.push("/account/signIn/shipping");// go to shipping page
-          dispatch(setIsLogin(true)); //user LOGIN
+      setShowPopUp(true)
+          setTimeout(()=>router.push("/account/signIn/shipping"),1000)// go to shipping page
         })
         .catch((error) => {
           if (error.code === "auth/invalid-credential") {
@@ -76,6 +78,8 @@ const AuthForm = () => {
 
   return (
     <div className="max-h-screen flex items-center justify-center">
+      <PopUp showPopUp={showPopUp} message="Succssefully Logged In"/>
+
       <div className=" flex flex-col items-center justify-center w-[300px] h-[400px] border shadow-md rounded-2xl translate-y-10 md:translate-y-28">
         <h1 className="text-2xl mb-3 font-mono">
           {isLogin ? "ALREADY REGISTERD?" : "Register"}
