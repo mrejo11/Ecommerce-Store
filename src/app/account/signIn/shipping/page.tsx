@@ -18,10 +18,10 @@ type Inputs = {
   firstName: string;
   lastName: string;
   email: string;
-  postId:number;
-  city:string;
-  address:string;
-  phone:number
+  postId: number;
+  city: string;
+  address: string;
+  phone: number;
 };
 
 export default function ShippingPage() {
@@ -40,8 +40,7 @@ export default function ShippingPage() {
     setIsTextarea(true);
   };
 
-  const handleOnSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = () => {
     router.push("/payment");
   };
 
@@ -74,7 +73,7 @@ export default function ShippingPage() {
   }, [isTextarea]);
 
   return (
-    <form onSubmit={handleSubmit(handleOnSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="h-screen flex items-center justify-center">
         <div className="grid grid-cols-2 gap-4 w-full max-w-2xl h-auto border p-4 rounded-2xl shadow">
           <div className="col-span-2">
@@ -102,17 +101,17 @@ export default function ShippingPage() {
 
           <div>
             <Input
-              {...register("firstName",{
-                required:"firstname is requird",
-                minLength:2,
+              {...register("firstName", {
+                required: "firstname is requird",
+                minLength: 2,
               })}
               placeholder="Name"
               className="w-full"
             />
             {errors.firstName && (
-               <span className="text-red-600 font-mono">
-               {errors.firstName.message}
-             </span>
+              <span className="text-red-600 font-mono">
+                {errors.firstName.message}
+              </span>
             )}
           </div>
           <div>
@@ -132,14 +131,14 @@ export default function ShippingPage() {
           </div>
           <div>
             <Input
-            {...register("email",{
-              required: "email is required",
+              {...register("email", {
+                required: "email is required",
                 minLength: 2,
-            })}
+              })}
               placeholder="Email"
               className="w-full"
             />
-              {errors.email && (
+            {errors.email && (
               <span className="text-red-600 font-mono">
                 {errors.email.message}
               </span>
@@ -147,14 +146,19 @@ export default function ShippingPage() {
           </div>
           <div>
             <Input
-              {...register("postId",{
+              {...register("postId", {
                 required: "PostId is required",
-                  minLength: 2,
+                valueAsNumber: true,
+                minLength: {
+                  value: 5,
+                  message: "PostId must be at least 5 digits",
+                },
               })}
+              type="number"
               placeholder="Post code"
               className="w-full"
             />
-              {errors.postId && (
+            {errors.postId && (
               <span className="text-red-600 font-mono">
                 {errors.postId.message}
               </span>
@@ -162,9 +166,9 @@ export default function ShippingPage() {
           </div>
           <div>
             <Input
-               {...register("city",{
+              {...register("city", {
                 required: "ciry is required",
-                  minLength: 2,
+                minLength: 2,
               })}
               placeholder="City"
               className="w-full"
@@ -200,14 +204,18 @@ export default function ShippingPage() {
           </div>
           <div>
             <Input
-              {...register("phone",{
+              {...register("phone", {
                 required: "phone is required",
-                  minLength: 2,
+                minLength: {
+                  value: 10,
+                  message: "phoneNumber must be at least 10 digits",
+                },
               })}
+              type="number"
               placeholder="Phone"
               className="w-full"
             />
-             {errors.phone && (
+            {errors.phone && (
               <span className="text-red-600 font-mono">
                 {errors.phone.message}
               </span>

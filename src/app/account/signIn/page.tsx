@@ -3,7 +3,6 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-// import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/fireBase";
 import { Button } from "@/components/ui/button";
@@ -40,8 +39,7 @@ const AuthForm = () => {
       // login request
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          dispatch(setIsLogin(true)); //user LOGIN
-          const user = userCredential.user;
+          const user = userCredential.user; //Save user data for future use (such as profile or admin-dashboard)
           console.log("success", user.email);
       setShowPopUp(true)
           setTimeout(()=>router.push("/account/signIn/shipping"),1000)// go to shipping page

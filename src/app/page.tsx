@@ -2,18 +2,15 @@ import Footer from "./components/Footer";
 import ProductList from "./components/DataFetch";
 import LandingPage from "./components/LandingPage";
 import { Github } from "lucide-react";
-// import { ModeToggle } from "./toggleMode"
 import getProduct from "./actions";
 
 
 export default async function Home() {
-
     const products =await getProduct();
-    console.log("Products in HomePage:", products);
+    // console.log("Products in HomePage:", products);
 
   return (
     <div>
-     
       <LandingPage />
       <ProductList products={products || []} />
       <Footer />

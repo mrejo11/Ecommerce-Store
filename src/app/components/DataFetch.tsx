@@ -1,9 +1,10 @@
 "use client";
+// this component receives data from server component as 
+//  props to render on the client side
+//for improving initial load time and SEO
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import Image from "next/image";
-// import { Button } from "@/components/ui/button";
 import { setSort, setCurrentPage } from "@/store/sortSlice";
 import { RootState, AppDispatch } from "@/store/store";
 import { SortField } from "@/type";
@@ -13,9 +14,10 @@ import { Product } from "@/type";
 import ProductModalWindow from "./ProductModalWindow";
 import SearchBar from "./SearchBar";
 import { ShowProduct } from "../actions";
+import { useMemo } from "react";
 
 interface ProductListProps {
-  products: ShowProduct[];
+  products: ShowProduct[]; // data passed as props for ssr
 }
 
 export default function ProductList({products}:ProductListProps) {
@@ -33,7 +35,6 @@ export default function ProductList({products}:ProductListProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
-  
 
   // Sort handler with page reset
   const handleSort = (field: SortField) => {
@@ -43,8 +44,9 @@ export default function ProductList({products}:ProductListProps) {
   };
 
   // Sort the products
-  const sortedProducts = products
-    ? [...products].sort((a, b) => {
+  const sortedProducts =useMemo(()=>{
+    if(!products) return [];
+    return [...products].sort((a, b) => {
         if (sortField === "price") {
           return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
         }
@@ -54,8 +56,8 @@ export default function ProductList({products}:ProductListProps) {
             : b.title.localeCompare(a.title);
         }
         return 0; // Default sort
-      })
-    : [];
+  })
+},[products,sortField,sortOrder])
 
     // handle click on product
   const handleProductClick = (product: Product) => {
@@ -76,11 +78,12 @@ export default function ProductList({products}:ProductListProps) {
     if (currentPage < totalPage) dispatch(setCurrentPage(currentPage + 1));
   };
 
+
   // Render
   return (
     <div className="container mt-6 mx-auto gap-4 mb-4">
       <h1 className="mb-4 text-2xl font-bold bg-gary-400"><SearchBar /></h1>
-      <div className="flex gap-2">
+      <div className="flex gap-2 ml-2">
         <span
           className={`${
             sortField === "default"

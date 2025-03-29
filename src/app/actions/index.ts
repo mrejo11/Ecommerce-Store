@@ -9,6 +9,7 @@ export interface ShowProduct {
   brand: string;
   model: string;
   color: string;
+
 }
 
 //data Fetch
@@ -19,7 +20,7 @@ export default async function getProduct(): Promise<ShowProduct[] | undefined> {
     });
     if (!res.ok) throw new Error("fail data fetch");
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
     return data.products;
   } catch (error) {
     console.error("Error fetching:", error);
