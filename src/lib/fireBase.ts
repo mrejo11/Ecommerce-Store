@@ -1,60 +1,23 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyAgygzMFzCLpm7Uq_ul1TaHd_XdaajFzPE",
+  authDomain: "e-commerc-6a35d.firebaseapp.com",
+  projectId: "e-commerc-6a35d",
+  storageBucket: "e-commerc-6a35d.firebasestorage.app",
+  messagingSenderId: "6015796816",
+  appId: "1:6015796816:web:c4aac1ffea534021a17355",
+  measurementId: "G-KB72WPGZ6S"
 };
 
-console.log("Firebase Config:", firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth=getAuth(app)
 
-let app;
-try {
-  app = initializeApp(firebaseConfig);
-  console.log("Firebase App initialized:", app.name);
-} catch (error: unknown) {
-  if (error instanceof Error) {
-    console.error("Register Error:", error.message);
-  } else {
-    console.error("An unknown error occurred");
-  }
-  throw error
-}
-
-
-export const auth = getAuth(app);
-
-export const registerUser = async (email: string, password: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log("User registered:", userCredential.user);
-    return userCredential;
-  } catch (error: unknown) {
-    if(error instanceof Error){
-      console.error("Register Error:", error.message);
-    }else{
-      console.log("An unknow error occured")
-    }
-    throw error;
-  }
-};
-
-export const loginUser = async (email: string, password: string) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("User logged in:", userCredential.user);
-    return userCredential;
-  } catch (error: unknown) {
-    if(error instanceof Error){
-      console.log("Login Error",error.message)
-    }else{
-      console.log("An unknow error occured")
-    }
-    throw error;
-  }
-};
+export {app,auth};
