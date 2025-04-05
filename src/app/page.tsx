@@ -1,5 +1,5 @@
 import Footer from "./components/Footer";
-import ProductList from "./components/DataFetch";
+import ProductList from "./components/HomePage";
 import LandingPage from "./components/LandingPage";
 import { Github } from "lucide-react";
 import getProduct from "./actions";

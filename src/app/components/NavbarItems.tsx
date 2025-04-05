@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { UserRound, ShoppingCart, Menu} from "lucide-react";
-// import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -18,55 +17,32 @@ import {
 } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
 import { resetAuth } from "@/store/authSlice";
-// import SearchBar from "./SearchBar";
 
 
 export default function NavbarItems() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearchActive, setIsSearchActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   //add number of items on shopping icon for show any items to shopping basket
   const cart = useSelector((state: RootState) => state.productModal.cart);
   useSelector((state: RootState) => state.authSlice);
-  const searchRef = useRef<HTMLDivElement | null>(null); //margah baraye input
   const dispatch = useDispatch<AppDispatch>();
 
   const router=useRouter()
   const handleHeaderClick = () => {
     dispatch(setCurrentPage(1));
   };
+
+ // Handles link clicks in the navbar on smaller screens.
+// Closes the navbar (if screen width is less than 768px) and resets the current page to 1.
   const handleLinkClick = () => {
     if (window.innerWidth < 768) {
-      // فقط در موبایل (عرض کمتر از 768px)
       setIsOpen(false);
       dispatch(setCurrentPage(1));
     }
   };
 
-  // const handleSearchClick = () => {
-  //   setIsSearchActive(!isSearchActive);
-  // };
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      // console.log("target:", event.target);
-      // console.log("contains:", searchRef.current?.contains(event.target as Node));
-      // console.log("!contains:", !searchRef.current?.contains(event.target as Node));
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node) &&
-        isSearchActive
-      ) {
-        setIsSearchActive(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSearchActive]);
-
+// Tracks user's login state using Firebase.
+// Shows or hides the online status indicator based on authentication status.
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -78,8 +54,9 @@ export default function NavbarItems() {
     return () => unsubscribe();
   }, []);
 
-    // تابع لاگ‌اوت
-    const handleSignOut = () => {
+// Signs the user out using Firebase authentication.
+// On success: resets Redux auth state, navigates to home page, and alerts the user.
+const handleSignOut = () => {
       signOut(auth)
         .then(() => {
           dispatch(resetAuth())
@@ -163,23 +140,6 @@ export default function NavbarItems() {
                 Appliances
               </Link>
               <div className="flex flex-col md:flex-row gap-8 md:items-center md:gap-4 ml-1 md:ml-8 cursor-pointer relative">
-                {/* <div className="flex items-center">
-                  <button onClick={handleSearchClick}>
-                    {isSearchActive ? (
-                      <X color="#000" />
-                    ) : (
-                      <Search color="#000" />
-                      
-                    )}
-                  </button>
-                {isSearchActive && (
-                  <div ref={searchRef}>
-                    <SearchBar />
-                  </div>
-                )}
-                </div> */}
-
-
                 <div className="flex items-center md:hidden">
                   <UserRound color="#000" />
                   {isOpen ? (
@@ -243,4 +203,4 @@ export default function NavbarItems() {
   );
 }
 
-//just alert
+
