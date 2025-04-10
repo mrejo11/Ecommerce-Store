@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "@/store/modalSlice";
 import { AppDispatch } from "@/store/store";
 import { Product } from "@/type";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState(""); // save input change
@@ -49,7 +50,7 @@ export default function SearchBar() {
   };
 
   // isloading state
-  if (isLoading) return <div> Loading ... </div>;
+  if (isLoading) return <div> <Skeleton className="h-10 w-[1400px]" /> </div>;
 
   //error handling
   if (error) return <div> error for data fetching </div>;

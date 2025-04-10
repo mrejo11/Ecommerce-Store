@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -48,19 +48,21 @@ function ProductList() {
   };
 
   // Sort the products
-  const sortedProducts = products
-    ? [...products].sort((a, b) => {
-        if (sortField === "price") {
-          return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
-        }
-        if (sortField === "title") {
-          return sortOrder === "asc"
-            ? a.title.localeCompare(b.title)
-            : b.title.localeCompare(a.title);
-        }
-        return 0; // Default sort
-      })
-    : [];
+  const sortedProducts = useMemo(()=>{
+    if(!products) return [];
+    return [...products].sort((a, b) => {
+      if (sortField === "price") {
+        return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
+      }
+      if (sortField === "title") {
+        return sortOrder === "asc"
+          ? a.title.localeCompare(b.title)
+          : b.title.localeCompare(a.title);
+      }
+      return 0; // Default sort
+    })
+  },[products,sortField,sortOrder])
+ 
 
     // handle click on product
   const handleProductClick = (product: Product) => {
@@ -71,7 +73,7 @@ function ProductList() {
   const totalPage = Math.ceil(sortedProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProducts = sortedProducts.slice(startIndex, endIndex); // Remove unnecessary ?.
+  const currentProducts = sortedProducts.slice(startIndex, endIndex); 
 
   // Pagination handlers
   const handlePrevious = () => {
